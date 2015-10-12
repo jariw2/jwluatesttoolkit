@@ -1,0 +1,17 @@
+function TestConstants_GRAPHICHORIZALIGN_()
+   NumberConstantTest(finale.GRAPHICHORIZALIGN_CENTER, "GRAPHICHORIZALIGN_CENTER", 2)
+   NumberConstantTest(finale.GRAPHICHORIZALIGN_LEFT, "GRAPHICHORIZALIGN_LEFT", 0)
+   NumberConstantTest(finale.GRAPHICHORIZALIGN_RIGHT, "GRAPHICHORIZALIGN_RIGHT", 1)
+end
+
+-- Test the constants:
+TestConstants_GRAPHICHORIZALIGN_()
+
+function TestConstants_GRAPHICVERTALIGN_()
+   NumberConstantTest(finale.GRAPHICVERTALIGN_BOTTOM, "GRAPHICVERTALIGN_BOTTOM", 1)
+   NumberConstantTest(finale.GRAPHICVERTALIGN_CENTER, "GRAPHICVERTALIGN_CENTER", 2)
+   NumberConstantTest(finale.GRAPHICVERTALIGN_TOP, "GRAPHICVERTALIGN_TOP", 0)
+end
+
+-- Test the constants:
+TestConstants_GRAPHICVERTALIGN_()
