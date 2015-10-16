@@ -26,6 +26,9 @@ function AddToTestOutput(ClassNameToFind, PassedArgument, propertyname, readonly
         else
             value = "false"
         end
+    elseif type(value) == "string" then
+        prefix = "String"
+        value = '"' .. value .. '"'
     elseif type(value) == "userdata" then
         TestOutput = TestOutput .. "   ObjectPropertyTest_RO("  .. PassedArgument .. ', "' .. ClassNameToFind .. '", "' .. propertyname .. '", "' .. value:ClassName() .. '")\n' 
         TestOutputCount = TestOutputCount + 1
@@ -119,6 +122,6 @@ end
 -- The actual code to process an object (modify as needed):
 
 
-local p = finale.FCSmartShapePrefs()
+local p = finale.FCStaffStyleDef()
 p:Load(1)
-ProcessObject(p, "ssprefs")
+ProcessObject(p, "ssd")
