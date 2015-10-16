@@ -13,6 +13,7 @@ require("constanttests/consttest_fcmeasure")
 require("constanttests/consttest_fcmiscdocprefs")
 require("constanttests/consttest_fcpagegraphic")
 require("constanttests/consttest_fcrepeatprefs")
+require("constanttests/consttest_fcstaff")
 require("constanttests/consttest_fctextrepeat")
 require("constanttests/consttest_fctextrepeatdef")
 

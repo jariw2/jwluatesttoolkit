@@ -4,7 +4,7 @@ function plugindef()   -- This function and the 'finaleplugin' namespace   -- 
 local dialog = finenv.UserValueInput()dialog.Title = "Test JW Lua Constants"dialog:SetTypes("String")dialog:SetDescriptions("Search string (empty to list all):")
 
 local returnvalues = dialog:Execute()if returnvalues == nil then return endlocal pattern = returnvalues[1]
-local result = {}
+local result = {}
 -- Search for constants
 local found = false
 for k,v in pairs(_G.finale) do
@@ -39,6 +39,7 @@ for k, v in pairs(result) do
         end
     elseif type(value) == "string" then
         prefix = "String"
+        value = '"' .. value .. '"'
     end
     ResultString = ResultString .. "   " .. prefix .. "ConstantTest(finale." .. v .. ", " .. '"' .. v .. '", ' .. value .. ")\n"
 endResultString = ResultString .. "end\n\n"
@@ -49,6 +50,7 @@ ResultString = ResultString .. "-- Test the constants:\nTestConstants_" .. patte
 if finenv.UI():TextToClipboard(ResultString) then
     finenv.UI():AlertInfo("Code has been copied to the clipboard.", "Test Created")
 end
+
 
 
 

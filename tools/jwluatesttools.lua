@@ -337,6 +337,26 @@ function NumberConstantTest(constobj, constname, expectedvalue)
     end
 end
 
+function StringConstantTest(constobj, constname, expectedvalue)
+    -- Test for nil
+    TestIncrease()
+    if not constobj then
+        TestError("Constant " .. constname .. " doesn't exist.")
+        return
+    end
+    -- Test type
+    TestIncrease()
+    if type(constobj) ~= "string" then
+        TestError(constname .. " is not a string constant. Actual type: " .. type(constobj))
+        return
+    end
+    -- Test expected value
+    TestIncrease()
+    if constobj ~= expectedvalue then
+        TestError("Constant " .. constname .. " does not have the expected value. Expected: ", expectedvalue .. "  Actual: " .. constobj)
+    end
+end
+
 
 -- Tries to find a specific note entry in the file. At each call, it clears the old loaded frames.
 function LoadMeasureEntry(measureno, staffno, entryid)
