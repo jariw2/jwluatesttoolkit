@@ -90,13 +90,37 @@ function AssureNil(value, testtext)
     return false
 end
 
--- Tests if the key name exists in the table
-function AssureKeyInTable(t, keyname, testtext)    
-    TestIncrease()
+-- Tests if the key name exists in the parent table.
+-- Test only one level back.
+function TestKeyInParentTable(t, keyname, indexname)
+    if not (indexname == "")  then
+        t = t[indexname]
+    end    
     for k, v in pairs(t) do
-        if k == keyname then return true end
+        --print (k, keyname)
+        if (k == keyname) then return true end
     end
-    TestError(testtext .. keyname)
+    return false
+end
+
+
+-- Tests if the key name exists in the table
+function AssureKeyInTable(t, keyname, indexname, testtext)  
+    TestIncrease()
+    local testtable = t
+    if not (indexname == "")  then
+        testtable = t[indexname]
+    end
+    for k, v in pairs(testtable) do
+        if k == keyname then return true end        
+    end
+    if t["__parent"] then
+        -- Test parent  class info (one parent level only)
+        if (TestKeyInParentTable(t["__parent"], keyname, indexname)) then
+           return true
+        end
+    end
+    TestError(testtext .. keyname)    
     return false
 end
 
@@ -108,13 +132,13 @@ function TestPropertyName(classname, propertyname, testsetter)
             -- Class name found
             if not AssureNonNil(v.__class.__propget,  "Internal error: __propget wasn't found for class " .. classname) then return end
             if not AssureNonNil(v.__class.__propset, "Internal error: __propset wasn't found for class " .. classname) then return false end
-            AssureKeyInTable(v.__class.__propget, propertyname, "Getter property not found for class " .. classname .. ": ")
+            AssureKeyInTable(v.__class, propertyname, "__propget", "Getter property not found for class " .. classname .. ": ")
             local methodname = "Get" .. propertyname
-            AssureKeyInTable(v.__class, methodname, "Getter method not found for class " .. classname .. ": ")
+            AssureKeyInTable(v.__class, methodname, "", "Getter method not found for class " .. classname .. ": ")
             if testsetter then
-                AssureKeyInTable(v.__class.__propset, propertyname, "Setter property not found for " .. classname .. ": ")
+                AssureKeyInTable(v.__class, propertyname, "__propset", "Setter property not found for " .. classname .. ": ")
                 methodname = "Set" .. propertyname
-                AssureKeyInTable(v.__class, methodname, "Setter method not found for " .. classname .. ": ")
+                AssureKeyInTable(v.__class, methodname, "", "Setter method not found for " .. classname .. ": ")
             end
             return
         end
