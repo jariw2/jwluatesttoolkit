@@ -1,4 +1,9 @@
-function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   return "JW Lua Class Tests", "Class Tests", "Test the validity of JW Lua classes"end
+function plugindef()
+   -- This function and the 'finaleplugin' namespace
+   -- are both reserved for the plug-in definition.
+   finaleplugin.NoStore = true
+   return "JW Lua Class Tests", "Class Tests", "Test the validity of JW Lua classes"
+end
 
 -- Load the toolkit  functions needed for the tests:
 require("tools/jwluatesttools")
@@ -12,6 +17,7 @@ require("classtests/jwluatest_fccustomsmartlinedef")
 require("classtests/jwluatest_fcdistanceprefs")
 require("classtests/jwluatest_fcfreezesystem")
 require("classtests/jwluatest_fcfretinstrumentdef")
+require("classtests/jwluatest_fcgroup")
 require("classtests/jwluatest_fcmeasure")
 require("classtests/jwluatest_fcmiscdocprefs")
 require("classtests/jwluatest_fcmusiccharacterprefs")
