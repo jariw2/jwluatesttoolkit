@@ -6,7 +6,7 @@ performed to make sure that JW Lua actually behaves the way it is meant to behav
 
 Currently, tests are available for properties. The JW Lua properties get tested for:
 * That the property exists in JW Lua
-* That the property also have a getter and setter method available in JW Liua
+* That the property also have a getter and setter method available in JW Lua
 * That the property are returning the expected Lua type
 * That the property can be loaded, set and saved correctly in Finale
 
