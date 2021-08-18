@@ -33,7 +33,7 @@ function FCArticulationDef_PropertyTests(articdef)
     else
         NumberPropertyTest(articdef, "FCArticulationDef", "FlippedSymbolChar", {0, 126, 252})
     end
-   StringPropertyTest(articdef, "FCArticulationDef", "FlippedSymbolFont", {"Maestro", "EngraverFontSet", "Petrucci"})
+   StringPropertyTest(articdef, "FCArticulationDef", "FlippedSymbolFont", {"Maestro", "Engraver Font Set", "Petrucci"})
    BoolPropertyTest(articdef, "FCArticulationDef", "FlippedSymbolIsShape")
    articdef.FlippedSymbolIsShape = true
    NumberPropertyTest(articdef, "FCArticulationDef", "FlippedSymbolShapeID", {0, 12, 480})
@@ -47,7 +47,7 @@ function FCArticulationDef_PropertyTests(articdef)
     else
         NumberPropertyTest(articdef, "FCArticulationDef", "MainSymbolChar", {0, 123, 251})
     end
-   StringPropertyTest(articdef, "FCArticulationDef", "MainSymbolFont", {"Maestro", "EngraverFontSet", "Petrucci"})
+   StringPropertyTest(articdef, "FCArticulationDef", "MainSymbolFont", {"Maestro", "Engraver Font Set", "Petrucci"})
    BoolPropertyTest(articdef, "FCArticulationDef", "MainSymbolIsShape")
    articdef.MainSymbolIsShape = true
    NumberPropertyTest(articdef, "FCArticulationDef", "MainSymbolShapeID", {0, 11, 481})
