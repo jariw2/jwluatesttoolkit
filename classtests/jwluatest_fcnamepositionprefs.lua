@@ -7,10 +7,16 @@ function FCNamePositionPrefs_PropertyTests(classname, prefs)
 end
 
 -- Call:
-local group_prefs = finale.FCGroupNamePositionPrefs()
-AssureTrue(group_prefs:LoadFull())
-FCNamePositionPrefs_PropertyTests("FCGroupNamePositionPrefs", group_prefs)
+local group_prefs_full = finale.FCGroupNamePositionPrefs()
+AssureTrue(group_prefs_full:LoadFull(), "FCGroupNamePositionPrefs::LoadFull")
+FCNamePositionPrefs_PropertyTests("FCGroupNamePositionPrefs", group_prefs_full)
+local group_prefs_abrv = finale.FCGroupNamePositionPrefs()
+AssureTrue(group_prefs_abrv:LoadAbbreviated(), "FCGroupNamePositionPrefs::LoadAbbreviated")
+FCNamePositionPrefs_PropertyTests("FCGroupNamePositionPrefs", group_prefs_abrv)
 
-local staff_prefs = finale.FCStaffNamePositionPrefs()
-AssureTrue(staff_prefs:LoadFull())
-FCNamePositionPrefs_PropertyTests("FCStaffNamePositionPrefs", staff_prefs)
+local staff_prefs_full = finale.FCStaffNamePositionPrefs()
+AssureTrue(staff_prefs_full:LoadFull(), "FCStaffNamePositionPrefs::LoadFull")
+FCNamePositionPrefs_PropertyTests("FCStaffNamePositionPrefs", staff_prefs_full)
+local staff_prefs_abrv = finale.FCStaffNamePositionPrefs()
+AssureTrue(staff_prefs_abrv:LoadAbbreviated(), "FCStaffNamePositionPrefs::LoadAbbreviated")
+FCNamePositionPrefs_PropertyTests("FCStaffNamePositionPrefs", staff_prefs_abrv)
