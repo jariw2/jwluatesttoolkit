@@ -8,9 +8,9 @@ end
 
 -- Call:
 local group_prefs = finale.FCGroupNamePositionPrefs()
-AssureTrue(group_prefs:Load(1))
+AssureTrue(group_prefs:LoadFull())
 FCNamePositionPrefs_PropertyTests("FCGroupNamePositionPrefs", group_prefs)
 
 local staff_prefs = finale.FCStaffNamePositionPrefs()
-AssureTrue(staff_prefs:Load(1))
+AssureTrue(staff_prefs:LoadFull())
 FCNamePositionPrefs_PropertyTests("FCStaffNamePositionPrefs", staff_prefs)
