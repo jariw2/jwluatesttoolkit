@@ -234,7 +234,6 @@ function NumberPropertyTest(obj, classname, propertyname, numbertable)
         end
         if obj[propertyname] ~= v then
             TestError("Number test failure while trying to set/save " .. classname .. "." .. propertyname .. " to " .. v .. " (received ".. obj[propertyname] .. ")" )
-            break
         end        
     end
     -- Restore the previous value

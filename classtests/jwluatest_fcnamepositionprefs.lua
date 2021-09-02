@@ -1,8 +1,9 @@
 function FCNamePositionPrefs_PropertyTests(classname, prefs)
+   NumberPropertyTest(prefs, classname, "Alignment", {finale.TEXTHORIZALIGN_LEFT, finale.TEXTHORIZALIGN_RIGHT, finale.TEXTHORIZALIGN_CENTER})
+   BoolPropertyTest(prefs, classname, "ExpandSingleWord")
+   NumberPropertyTest(prefs, classname, "HorizontalPos", {-144, 0, 144})
    NumberPropertyTest(prefs, classname, "Justification", {finale.TEXTJUSTIFY_LEFT, finale.TEXTJUSTIFY_RIGHT, finale.TEXTJUSTIFY_CENTER,
       finale.TEXTJUSTIFY_FULL, finale.TEXTJUSTIFY_FORCED_FULL})
-   NumberPropertyTest(prefs, classname, "Alignment", {finale.TEXTHORIZALIGN_LEFT, finale.TEXTHORIZALIGN_RIGHT, finale.TEXTHORIZALIGN_CENTER})
-   NumberPropertyTest(prefs, classname, "HorizontalPos", {-144, 0, 144})
    NumberPropertyTest(prefs, classname, "VerticalPos", {-144, 0, 144})
 end
 
