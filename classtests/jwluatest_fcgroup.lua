@@ -5,6 +5,7 @@ function FCGroup_PropertyTests(group)
    NumberPropertyTest(group, "FCGroup", "AbbreviatedNameJustify", {finale.TEXTJUSTIFY_LEFT, finale.TEXTJUSTIFY_RIGHT, finale.TEXTJUSTIFY_CENTER,
       finale.TEXTJUSTIFY_FULL, finale.TEXTJUSTIFY_FORCED_FULL})
    NumberPropertyTest(group, "FCGroup", "AbbreviatedNameVerticalOffset", {-144, 0, 144})
+   NumberPropertyTest(group, "FCGroup", "BarlineShapeID", {1, 10, 100}) -- not sure if this is still usable in current Finale
    NumberPropertyTest(group, "FCGroup", "BarlineStyle", {finale.BARLINE_NONE, finale.BARLINE_NORMAL, finale.BARLINE_DOUBLE, finale.BARLINE_DASHED,
       finale.BARLINE_THICK, finale.BARLINE_FINAL, finale.BARLINE_TICK, finale.BARLINE_SHAPE, finale.BARLINE_DEFAULT})
    BoolPropertyTest(group, "FCGroup", "BarlineUse")
