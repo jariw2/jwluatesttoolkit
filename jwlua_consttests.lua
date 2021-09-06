@@ -24,7 +24,9 @@ require("constanttests/consttest_fcstaff")
 require("constanttests/consttest_fctextblock")
 require("constanttests/consttest_fctextrepeat")
 require("constanttests/consttest_fctextrepeatdef")
+require("constanttests/consttest_fctiecontourprefs")
+require("constanttests/consttest_fctieplacementprefs")
+require("constanttests/consttest_fctieprefs")
 
 -- Output the results from the tests:
 PrintTestResult()
-
