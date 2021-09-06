@@ -1,0 +1,11 @@
+function TestConstants_TIEPLACE_()
+   NumberConstantTest(finale.TIEPLACE_OVERINNER, "TIEPLACE_OVERINNER", 0)
+   NumberConstantTest(finale.TIEPLACE_UNDERINNER , "TIEPLACE_UNDERINNER", 1)
+   NumberConstantTest(finale.TIEPLACE_OVEROUTERNOTE, "TIEPLACE_OVEROUTERNOTE", 2)
+   NumberConstantTest(finale.TIEPLACE_UNDEROUTERNOTE, "TIEPLACE_UNDEROUTERNOTE", 3)
+   NumberConstantTest(finale.TIEPLACE_OVEROUTERSTEM, "TIEPLACE_OVEROUTERNOTE", 4)
+   NumberConstantTest(finale.TIEPLACE_UNDEROUTERSTEM, "TIEPLACE_UNDEROUTERNOTE", 5)
+end
+
+-- Test the constants:
+TestConstants_TIEPLACE_()

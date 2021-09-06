@@ -1,4 +1,9 @@
-function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   return "JW Lua File Tests", "File Tests", "Test the validity of JW Lua classes against a specific debug file."end
+function plugindef()
+   -- This function and the 'finaleplugin' namespace
+   -- are both reserved for the plug-in definition.
+   finaleplugin.NoStore = true
+   return "JW Lua File Tests", "File Tests", "Test the validity of JW Lua classes against a specific debug file."
+end
 
 -- Validate the current file prior to the test:
 local fileinfotext = finale.FCFileInfoText()
@@ -38,6 +43,7 @@ require("objecttests/jwluatest_obj_fcrepeatprefs")
 require("objecttests/jwluatest_obj_fcsizeprefs")
 require("objecttests/jwluatest_obj_fcsmartshapeprefs")
 require("objecttests/jwluatest_obj_fcstaff")
+require("objecttests/jwluatest_obj_fcstaffnameposition")
 require("objecttests/jwluatest_obj_fcstaffstyledef")
 require("objecttests/jwluatest_obj_fctextexpressiondef")
 require("objecttests/jwluatest_obj_fctextrepeat")

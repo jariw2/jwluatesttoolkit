@@ -31,12 +31,12 @@ require("classtests/jwluatest_fcrepeatprefs")
 require("classtests/jwluatest_fcsizeprefs")
 require("classtests/jwluatest_fcsmartshapeprefs")
 require("classtests/jwluatest_fcstaff")
-require("classtests/jwluatest_fcstaffnameposition")
 require("classtests/jwluatest_fcstaffstyledef")
 require("classtests/jwluatest_fcstaffsystem")
 require("classtests/jwluatest_fcstring")
 require("classtests/jwluatest_fctextexpressiondef")
 require("classtests/jwluatest_fctextrepeatdef")
+require("classtests/jwluatest_fctieprefs")
 require("classtests/jwluatest_fcui")
 
 -- Output the results from the tests:
