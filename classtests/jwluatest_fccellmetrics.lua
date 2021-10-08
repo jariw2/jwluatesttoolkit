@@ -19,4 +19,13 @@ end
 local metrics = finale.FCCellMetrics()
 local cell = finale.FCCell(1,1)
 AssureTrue(metrics:LoadAtCell(cell))
+
+-- These functions were not marked Lua-supported in the Framework 0.54 doc pages,
+-- but they appear to be hooked up in JW Lua 0.54.
+
+StaticFunctionTest("FCCellMetrics", "MarkMetricsForRebuild")
+FunctionTest(metrics, "FCCellMetrics", "LoadAtCell")
+
+-- Test properties
+
 FCCellMetrics_PropertyTests(metrics)
