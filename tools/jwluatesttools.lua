@@ -89,24 +89,33 @@ function AssureNil(value, testtext)
     return false
 end
 
+-- Tests that the function name exists
+function AssureFunctionExists(obj, classname, functionname, error_message)
+    TestIncrease()
+    if type(obj[functionname]) == "function" then return true end
+    TestError(error_message .. classname .. ": " .. functionname)
+    return false
+end
 
 -- Tests that the property name exists
-function TestPropertyName(obj, classname, propertyname, testsetter)
+function TestPropertyName(obj, classname, propertyname, testsetter, allownil)
+    allownil = allownil or false -- optional parameter
     TestIncrease()
-    if not AssureNonNil(obj[propertyname], "Property not found for class " .. classname) then return end
+    if not allownil then
+        if not AssureNonNil(obj[propertyname], "Property " .. propertyname .. " not found for class " .. classname) then return end
+    end
     if not AssureTrue(type(obj[propertyname]) ~= "function", propertyname .. "is a method on class " .. classname) then return end
     local methodname = "Get" .. propertyname
-    AssureTrue(type(obj[methodname]) == "function", "Getter method not found for " .. classname .. ": " .. propertyname)
+    AssureFunctionExists(obj, classname, methodname, "Getter method not found for ")
     if testsetter then
         methodname = "Set" .. propertyname
-        AssureTrue(type(obj[methodname]) == "function", "Setter method not found for " .. classname .. ": " .. propertyname)
+        AssureFunctionExists(obj, classname, methodname, "Setter method not found for ")
     end
 end
 
 -- Tests that the function name exists
 function TestFunctionName(obj, classname, functionname)
-    TestIncrease()
-    AssureTrue(type(obj[functionname]) == "function", "Getter method not found for " .. classname .. ": " .. functionname)
+    AssureFunctionExists(obj, classname, functionname, "Method not found for ")
 end
 
 -- Test the availability of the class and that the ClassName() method returns the correct string
@@ -132,9 +141,9 @@ function TestClassName(obj, classname)
 end
 
 -- Read-only test for properties
-function PropertyTest_RO(obj, classname, propertyname)
+function PropertyTest_RO(obj, classname, propertyname, allownil)
     if not TestClassName(obj, classname) then return end
-    TestPropertyName(obj, classname, propertyname, false)
+    TestPropertyName(obj, classname, propertyname, false, allownil)
 end
 
 -- Test for read/write properties
@@ -146,7 +155,7 @@ end
 -- Test for class methods
 function FunctionTest(obj, classname, functionname)
     if not TestClassName(obj, classname) then return end
-    TestFunctionName(obj, classname, functionname, true)
+    TestFunctionName(obj, classname, functionname)
 end
 
 -- Test for static function existence
