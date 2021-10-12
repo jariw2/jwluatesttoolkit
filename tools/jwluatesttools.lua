@@ -63,7 +63,6 @@ function AssureTrue(value, expression)
     return false
 end
 
-
 -- Test that the value is false
 function AssureFalse(value, expression)
     TestIncrease()
@@ -71,7 +70,6 @@ function AssureFalse(value, expression)
     TestError("Test for 'false' failed for " .. __StringVersion(expression))
     return false
 end
-
 
 -- Tests that the value is non-nil
 function AssureNonNil(value, testtext)
