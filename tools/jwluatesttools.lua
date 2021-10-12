@@ -146,6 +146,19 @@ function TestPropertyName(classname, propertyname, testsetter)
     TestError("Class name not found: " .. classname)
 end
 
+-- Tests that the function name exists
+function TestFunctionName(classname, functionname)
+    TestIncrease()
+    for k,v in pairs(_G.finale) do
+        if k == classname and v.__class then
+            -- Class name found
+            AssureKeyInTable(v.__class, functionname, "", "Function not found for class " .. classname .. ": ")
+            return
+        end
+    end
+    TestError("Class name not found: " .. classname)
+end
+
 -- Test the availability of the class and that the ClassName() method returns the correct string
 function TestClassName(obj, classname)
     TestIncrease()
@@ -178,6 +191,26 @@ end
 function PropertyTest(obj, classname, propertyname)
     if not TestClassName(obj, classname) then return end
     TestPropertyName(classname, propertyname, true)
+end
+
+-- Test for class methods
+function FunctionTest(obj, classname, functionname)
+    if not TestClassName(obj, classname) then return end
+    TestFunctionName(classname, functionname, true)
+end
+
+-- Test for static function existence
+function StaticFunctionTest(classname, functionname)
+    TestIncrease()
+    if (_G.finale[classname] == nil) then
+        TestError("Classname not found in StaticFunctionTest() when testing for classname " .. classname .. "." .. functionname)
+        return false
+    end
+    TestIncrease()
+    if (_G.finale[classname][functionname] == nil) then
+        TestError("Function is nil in StaticFunctionTest() when testing for classname " .. classname .. "." .. functionname)
+        return false
+    end
 end
 
 -- Test for boolean properties
