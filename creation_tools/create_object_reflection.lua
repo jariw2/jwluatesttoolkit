@@ -17,6 +17,22 @@ dialog:SetDescriptions("Class name (empty to list all):")
 
 local num_methods = 0
 local num_classes = 0
+local refl_auto_max = 98 -- maximum number before REFL_AUTO crashes and burns
+
+function CountMethods(classtable)
+    local retval = 0
+    for k, v in pairs(classtable) do
+        if type(v) == "function" then
+            retval = retval + 1
+        end
+    end
+    for k, v in pairs(classtable.__class) do
+        if type(v) == "function" then
+            retval = retval + 1
+        end
+    end
+    return retval
+end
 
 function ProcessClass(classname, classtable)
     local proptable = {}
@@ -34,14 +50,25 @@ function ProcessClass(classname, classtable)
 --            print ("found property set" .. kstr)
         end
     end
-    refl_output = refl_output .. "REFL_AUTO\n(\n   type(" .. classname .. "),"
-    refl_output = refl_output .. "\n   func(ClassName)," -- adding these in forces us to add them to any class where they are missing
+    local method_count = CountMethods(classtable)
+    local use_auto_syntax = method_count < refl_auto_max
+    if use_auto_syntax then
+        refl_output = refl_output .. "REFL_AUTO\n(\n   type(" .. classname .. "),"
+        refl_output = refl_output .. "\n   func(ClassName)," -- adding these in forces us to add them to any class where they are missing
+    else
+        refl_output = refl_output .. "REFL_TYPE(" .. classname .. ")\n"
+        refl_output = refl_output .. "   REFL_FUNC(ClassName)\n"
+    end
     -- this search for static functions does not work, but leave it here in case it is every possible some day
     for k, v in pairs(classtable) do
         local kstr = tostring(k)
 --        print ("type(v) static " .. type(v) .. " [" .. classname .. ":" .. kstr .. "]")
         if type(v) == "function" then
-            refl_output = refl_output .. "\n   func(" .. kstr .. ", static_func()),"
+            if use_auto_syntax then
+                refl_output = refl_output .. "\n   func(" .. kstr .. ", static_func()),"
+            else
+                refl_output = refl_output .. "   REFL_FUNC(" .. kstr .. ", static_func())\n"
+            end
             num_methods = num_methods + 1
         end
     end
@@ -49,19 +76,32 @@ function ProcessClass(classname, classtable)
         local kstr = tostring(k)
 --        print ("type(v) method " .. tostring(v) .. " [" .. classname .. ":" .. kstr .. "]")
         if type(v) == "function" and kstr:find("_") ~= 1 then
-            refl_output = refl_output .. "\n   func(" .. kstr
+            if use_auto_syntax then
+                refl_output = refl_output .. "\n   func(" .. kstr
+            else
+                refl_output = refl_output .. "   REFL_FUNC(" .. kstr
+            end
             if kstr:find("Create") == 1 then
                 refl_output = refl_output .. '_GC, special_name("' .. kstr .. '")'
             end
             if proptable[k] then
                 refl_output = refl_output .. ", property()"
             end
-            refl_output = refl_output .. "),"
+            refl_output = refl_output .. ")"
+            if use_auto_syntax then
+                refl_output = refl_output .. ","
+            else
+                refl_output = refl_output .. "\n"
+            end
             num_methods = num_methods + 1
         end
     end
-    refl_output = refl_output:sub(1, -2) -- remove final comma
-    refl_output = refl_output .. "\n)\n\n"
+    if use_auto_syntax then
+        refl_output = refl_output:sub(1, -2) -- remove final comma
+        refl_output = refl_output .. "\n)\n\n"
+    else
+        refl_output = refl_output .. "REFL_END\n"
+    end
     num_classes = num_classes + 1
 end
 
