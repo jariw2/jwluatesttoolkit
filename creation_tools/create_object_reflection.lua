@@ -1,33 +1,56 @@
 function plugindef()
    -- This function and the 'finaleplugin' namespace
    -- are both reserved for the plug-in definition.
+   finaleplugin.RequireDocument = false -- ignored by jw lua 0.54
    finaleplugin.NoStore = true
    finaleplugin.Author = "Jari Williamsson"
    finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"
-   return "Create Object Reflection", "Create Object Test", "Create a test for the properties found for a object."
+   return "Create Object Reflection", "Create Object Reflection", "Reflect selected class(es) to the clipboard in refl-cpp format."
+end
+
+if finenv.MinorVersion > 54 then -- if new lua
+    require('mobdebug').start()
 end
 
 local refl_output = ""
+local classname = "FCEntryMetrics" -- change this to the class you want, if the dialog isn't available (i.e. RGP Lua)
 
 -- Show dialog
-local dialog = finenv.UserValueInput()
-dialog.Title = "Class Name To Reflect"
-dialog:SetTypes("String")
-dialog:SetDescriptions("Class name (empty to list all):")
+local dialog = nil
+if finenv.MinorVersion <= 54 then -- old jw lua version
+    dialog = finenv.UserValueInput()
+    dialog.Title = "Class Name To Reflect"
+    dialog:SetTypes("String")
+    dialog:SetDescriptions("Class name (empty to list all):")
+end
 
 local num_methods = 0
 local num_classes = 0
 local refl_auto_max = 98 -- maximum number before REFL_AUTO crashes and burns
 
+function __static_table(classtable)
+    if finenv.MinorVersion <= 54 then
+        return classtable -- this doesn't actually work in jw lua 0.54, even though it seems like it should :-(
+    end
+    return classtable.__static
+end
+
+function __prop_table(classtable, key)
+    if finenv.MinorVersion <= 54 then
+        return classtable.__class[key]
+    end
+    return classtable[key]
+end
+
 function CountMethods(classtable)
     local retval = 0
-    for k, v in pairs(classtable) do
+    for k, v in pairs(__static_table(classtable)) do
         if type(v) == "function" then
             retval = retval + 1
         end
     end
     for k, v in pairs(classtable.__class) do
-        if type(v) == "function" then
+        if finenv.MinorVersion > 54 or type(v) == "function" then
             retval = retval + 1
         end
     end
@@ -36,15 +59,17 @@ end
 
 function ProcessClass(classname, classtable)
     local proptable = {}
-    if classtable.__class.__propget then
-        for k, _ in pairs(classtable.__class.__propget) do
+    local __propget = __prop_table(classtable,"__propget")
+    if __propget then
+        for k, _ in pairs(__propget) do
             local kstr = tostring(k)
             proptable["Get" .. kstr] = 1
 --            print ("found property get" .. kstr)
         end
     end
-    if classtable.__class.__propset then
-        for k, _ in pairs(classtable.__class.__propset) do
+    local __propget = __prop_table(classtable,"__propset")
+    if __propget then
+        for k, _ in pairs(__propget) do
             local kstr = tostring(k)
             proptable["Set" .. kstr] = 1
 --            print ("found property set" .. kstr)
@@ -59,11 +84,11 @@ function ProcessClass(classname, classtable)
         refl_output = refl_output .. "REFL_TYPE(" .. classname .. ")\n"
         refl_output = refl_output .. "   REFL_FUNC(ClassName)\n"
     end
-    -- this search for static functions does not work, but leave it here in case it is every possible some day
-    for k, v in pairs(classtable) do
+    -- this search for static functions does not work in jw lua 0.54 even though it seems like it should
+    for k, v in pairs(__static_table(classtable)) do
         local kstr = tostring(k)
 --        print ("type(v) static " .. type(v) .. " [" .. classname .. ":" .. kstr .. "]")
-        if type(v) == "function" then
+        if finenv.MinorVersion > 54 or type(v) == "function" then
             if use_auto_syntax then
                 refl_output = refl_output .. "\n   func(" .. kstr .. ", static_func()),"
             else
@@ -75,7 +100,7 @@ function ProcessClass(classname, classtable)
     for k, v in pairs(classtable.__class) do
         local kstr = tostring(k)
 --        print ("type(v) method " .. tostring(v) .. " [" .. classname .. ":" .. kstr .. "]")
-        if type(v) == "function" and kstr:find("_") ~= 1 then
+        if (finenv.MinorVersion > 54 or type(v) == "function") and kstr:find("_") ~= 1 and kstr ~= "ClassName" then
             if use_auto_syntax then
                 refl_output = refl_output .. "\n   func(" .. kstr
             else
@@ -105,9 +130,11 @@ function ProcessClass(classname, classtable)
     num_classes = num_classes + 1
 end
 
-local returnvalues = dialog:Execute()
-if returnvalues == nil then return end
-local classname = returnvalues[1]
+if dialog ~= nil then
+    local returnvalues = dialog:Execute()
+    if returnvalues == nil then return end
+    classname = returnvalues[1]
+end
 
 for k, v in pairs(_G.finale) do
     local kstr = tostring(k)
@@ -124,7 +151,7 @@ if classname == "" then  classname = "All Classes" end
 print ("Found " .. tostring(num_methods) .. " methods in " .. tostring(num_classes) .. " classes. (" .. classname .. ")")
 
 if num_classes <= 0 then
-    finenv.UI():AlertInfo("Class " .. returnvalues[1] .. " not found. Nothing has been copied to the clipboard.", "Code Not Created")
+    finenv.UI():AlertInfo("Class " .. classname .. " not found. Nothing has been copied to the clipboard.", "Code Not Created")
     return
 end
 
