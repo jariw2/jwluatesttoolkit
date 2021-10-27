@@ -63,7 +63,7 @@ function ProcessClass(classname, classtable)
     if __propget then
         for k, _ in pairs(__propget) do
             local kstr = tostring(k)
-            proptable["Get" .. kstr] = 1
+            proptable["Get" .. kstr] = false
 --            print ("found property get" .. kstr)
         end
     end
@@ -71,7 +71,7 @@ function ProcessClass(classname, classtable)
     if __propget then
         for k, _ in pairs(__propget) do
             local kstr = tostring(k)
-            proptable["Set" .. kstr] = 1
+            proptable["Set" .. kstr] = false
 --            print ("found property set" .. kstr)
         end
     end
@@ -99,7 +99,7 @@ function ProcessClass(classname, classtable)
     end
     for k, v in pairs(classtable.__class) do
         local kstr = tostring(k)
---        print ("type(v) method " .. tostring(v) .. " [" .. classname .. ":" .. kstr .. "]")
+--        print (type(v) .. " method " .. tostring(v) .. " [" .. classname .. ":" .. kstr .. "]")
         if (finenv.MinorVersion > 54 or type(v) == "function") and kstr:find("_") ~= 1 and kstr ~= "ClassName" then
             if use_auto_syntax then
                 refl_output = refl_output .. "\n   func(" .. kstr
@@ -109,8 +109,9 @@ function ProcessClass(classname, classtable)
             if kstr:find("Create") == 1 then
                 refl_output = refl_output .. '_GC, special_name("' .. kstr .. '")'
             end
-            if proptable[k] then
+            if nil ~= proptable[k] then
                 refl_output = refl_output .. ", property()"
+                proptable[k] = true
             end
             refl_output = refl_output .. ")"
             if use_auto_syntax then
@@ -128,6 +129,11 @@ function ProcessClass(classname, classtable)
         refl_output = refl_output .. "REFL_END\n"
     end
     num_classes = num_classes + 1
+    for k, v in pairs(proptable) do
+        if not v then
+            print ("WARNING: Property getter or setter not found in functions: " .. classname .. "." .. k)
+        end
+    end
 end
 
 if dialog ~= nil then
