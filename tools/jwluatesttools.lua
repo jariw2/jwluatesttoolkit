@@ -103,25 +103,45 @@ function TestKeyInParentTable(t, keyname, indexname)
     return false
 end
 
-
 -- Tests if the key name exists in the table
-function AssureKeyInTable(t, keyname, indexname, testtext)  
+function AssureKeyInTable(classtable, keyname, indexname, testtext)
     TestIncrease()
-    local testtable = t
+    local testtable = classtable.__class
     if not (indexname == "")  then
-        testtable = t[indexname]
+        if finenv.MinorVersion <= 54 then
+            testtable = testtable[indexname]
+        else
+            testtable = classtable[indexname]
+        end
     end
     for k, v in pairs(testtable) do
         if k == keyname then return true end        
     end
-    if t["__parent"] then
-        -- Test parent  class info (one parent level only)
-        if (TestKeyInParentTable(t["__parent"], keyname, indexname)) then
-           return true
+    -- Test parent  class info (one parent level only)
+    local ptable = nil
+    if finenv.MinorVersion > 54 then
+        ptable = classtable["__parent"]
+        for k2, v2 in pairs(ptable) do
+            ptable = _G.finale[k2]
+            if ptable and indexname == "" then
+                ptable = ptable.__class
+            end
         end
+    else
+        ptable = classtable.__class["__parent"]
+    end
+    if ptable and (TestKeyInParentTable(ptable, keyname, indexname)) then
+        return true
     end
     TestError(testtext .. keyname)    
     return false
+end
+
+function GetPropTable(classtable, key)
+    if finenv.MinorVersion > 54 then
+        return classtable[key]
+    end
+    return classtable.__class[key]
 end
 
 -- Tests that the property name exists
@@ -130,15 +150,15 @@ function TestPropertyName(classname, propertyname, testsetter)
     for k,v in pairs(_G.finale) do
         if k == classname and v.__class then
             -- Class name found
-            if not AssureNonNil(v.__class.__propget,  "Internal error: __propget wasn't found for class " .. classname) then return end
-            if not AssureNonNil(v.__class.__propset, "Internal error: __propset wasn't found for class " .. classname) then return false end
-            AssureKeyInTable(v.__class, propertyname, "__propget", "Getter property not found for class " .. classname .. ": ")
+            if not AssureNonNil(GetPropTable(v, "__propget"),  "Internal error: __propget wasn't found for class " .. classname) then return end
+            if not AssureNonNil(GetPropTable(v, "__propset"), "Internal error: __propset wasn't found for class " .. classname) then return false end
+            AssureKeyInTable(v, propertyname, "__propget", "Getter property not found for class " .. classname .. ": ")
             local methodname = "Get" .. propertyname
-            AssureKeyInTable(v.__class, methodname, "", "Getter method not found for class " .. classname .. ": ")
+            AssureKeyInTable(v, methodname, "", "Getter method not found for class " .. classname .. ": ")
             if testsetter then
-                AssureKeyInTable(v.__class, propertyname, "__propset", "Setter property not found for " .. classname .. ": ")
+                AssureKeyInTable(v, propertyname, "__propset", "Setter property not found for " .. classname .. ": ")
                 methodname = "Set" .. propertyname
-                AssureKeyInTable(v.__class, methodname, "", "Setter method not found for " .. classname .. ": ")
+                AssureKeyInTable(v, methodname, "", "Setter method not found for " .. classname .. ": ")
             end
             return
         end
@@ -152,7 +172,7 @@ function TestFunctionName(classname, functionname)
     for k,v in pairs(_G.finale) do
         if k == classname and v.__class then
             -- Class name found
-            AssureKeyInTable(v.__class, functionname, "", "Function not found for class " .. classname .. ": ")
+            AssureKeyInTable(v, functionname, "", "Function not found for class " .. classname .. ": ")
             return
         end
     end
