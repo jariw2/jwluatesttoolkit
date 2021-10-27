@@ -20,6 +20,7 @@ function Is2014BOrAbove()
     return finenv.RawFinaleVersion >= 0x12020000
 end
 
+
 -- A help method to assure a usable string value
 function __StringVersion(expression)
     if expression == nil then return "(nil)" end
@@ -63,6 +64,7 @@ function AssureTrue(value, expression)
     return false
 end
 
+
 -- Test that the value is false
 function AssureFalse(value, expression)
     TestIncrease()
@@ -70,6 +72,7 @@ function AssureFalse(value, expression)
     TestError("Test for 'false' failed for " .. __StringVersion(expression))
     return false
 end
+
 
 -- Tests that the value is non-nil
 function AssureNonNil(value, testtext)
@@ -87,33 +90,93 @@ function AssureNil(value, testtext)
     return false
 end
 
--- Tests that the function name exists
-function AssureFunctionExists(obj, classname, functionname, error_message)
-    TestIncrease()
-    if type(obj[functionname]) == "function" then return true end
-    TestError(error_message .. classname .. ": " .. functionname)
+-- Tests if the key name exists in the parent table.
+-- Test only one level back.
+function TestKeyInParentTable(t, keyname, indexname)
+    if not (indexname == "")  then
+        t = t[indexname]
+    end    
+    for k, v in pairs(t) do
+        --print (k, keyname)
+        if (k == keyname) then return true end
+    end
     return false
 end
 
--- Tests that the property name exists
-function TestPropertyName(obj, classname, propertyname, testsetter, allownil)
-    allownil = allownil or false -- optional parameter
+-- Tests if the key name exists in the table
+function AssureKeyInTable(classtable, keyname, indexname, testtext)
     TestIncrease()
-    if not allownil then
-        if not AssureNonNil(obj[propertyname], "Property " .. propertyname .. " not found for class " .. classname) then return end
+    local testtable = classtable.__class
+    if not (indexname == "")  then
+        if finenv.MinorVersion <= 54 then
+            testtable = testtable[indexname]
+        else
+            testtable = classtable[indexname]
+        end
     end
-    if not AssureTrue(type(obj[propertyname]) ~= "function", propertyname .. "is a method on class " .. classname) then return end
-    local methodname = "Get" .. propertyname
-    AssureFunctionExists(obj, classname, methodname, "Getter method not found for ")
-    if testsetter then
-        methodname = "Set" .. propertyname
-        AssureFunctionExists(obj, classname, methodname, "Setter method not found for ")
+    for k, v in pairs(testtable) do
+        if k == keyname then return true end        
     end
+    -- Test parent  class info (one parent level only)
+    local ptable = nil
+    if finenv.MinorVersion > 54 then
+        ptable = classtable["__parent"]
+        for k2, v2 in pairs(ptable) do
+            ptable = _G.finale[k2]
+            if ptable and indexname == "" then
+                ptable = ptable.__class
+            end
+        end
+    else
+        ptable = classtable.__class["__parent"]
+    end
+    if ptable and (TestKeyInParentTable(ptable, keyname, indexname)) then
+        return true
+    end
+    TestError(testtext .. keyname)    
+    return false
+end
+
+function GetPropTable(classtable, key)
+    if finenv.MinorVersion > 54 then
+        return classtable[key]
+    end
+    return classtable.__class[key]
+end
+
+-- Tests that the property name exists
+function TestPropertyName(classname, propertyname, testsetter)
+    TestIncrease()
+    for k,v in pairs(_G.finale) do
+        if k == classname and v.__class then
+            -- Class name found
+            if not AssureNonNil(GetPropTable(v, "__propget"),  "Internal error: __propget wasn't found for class " .. classname) then return end
+            if not AssureNonNil(GetPropTable(v, "__propset"), "Internal error: __propset wasn't found for class " .. classname) then return false end
+            AssureKeyInTable(v, propertyname, "__propget", "Getter property not found for class " .. classname .. ": ")
+            local methodname = "Get" .. propertyname
+            AssureKeyInTable(v, methodname, "", "Getter method not found for class " .. classname .. ": ")
+            if testsetter then
+                AssureKeyInTable(v, propertyname, "__propset", "Setter property not found for " .. classname .. ": ")
+                methodname = "Set" .. propertyname
+                AssureKeyInTable(v, methodname, "", "Setter method not found for " .. classname .. ": ")
+            end
+            return
+        end
+    end
+    TestError("Class name not found: " .. classname)
 end
 
 -- Tests that the function name exists
-function TestFunctionName(obj, classname, functionname)
-    AssureFunctionExists(obj, classname, functionname, "Method not found for ")
+function TestFunctionName(classname, functionname)
+    TestIncrease()
+    for k,v in pairs(_G.finale) do
+        if k == classname and v.__class then
+            -- Class name found
+            AssureKeyInTable(v, functionname, "", "Function not found for class " .. classname .. ": ")
+            return
+        end
+    end
+    TestError("Class name not found: " .. classname)
 end
 
 -- Test the availability of the class and that the ClassName() method returns the correct string
@@ -125,7 +188,7 @@ function TestClassName(obj, classname)
     end
     TestIncrease()
     for k,v in pairs(_G.finale) do
-        if k == classname and type(v) == "table" then
+        if k == classname and v.__class then
             -- Class name found - test the Class name method in the object
             TestIncrease()
             if obj:ClassName() ~= classname then
@@ -139,21 +202,21 @@ function TestClassName(obj, classname)
 end
 
 -- Read-only test for properties
-function PropertyTest_RO(obj, classname, propertyname, allownil)
+function PropertyTest_RO(obj, classname, propertyname)
     if not TestClassName(obj, classname) then return end
-    TestPropertyName(obj, classname, propertyname, false, allownil)
+    TestPropertyName(classname, propertyname, false)
 end
 
 -- Test for read/write properties
 function PropertyTest(obj, classname, propertyname)
     if not TestClassName(obj, classname) then return end
-    TestPropertyName(obj, classname, propertyname, true)
+    TestPropertyName(classname, propertyname, true)
 end
 
 -- Test for class methods
 function FunctionTest(obj, classname, functionname)
     if not TestClassName(obj, classname) then return end
-    TestFunctionName(obj, classname, functionname)
+    TestFunctionName(classname, functionname, true)
 end
 
 -- Test for static function existence

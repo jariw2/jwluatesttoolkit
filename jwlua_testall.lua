@@ -10,7 +10,4 @@ require("jwlua_filetests")
 require("jwlua_consttests")
 require("jwlua_classtests")
 
-finenv.StartNewUndoBlock("No updates", false) -- guarantee no updates, since pilot-project RGP Lua has not yet implemented finaleplugin namespace
-
 -- No need to output the result, since that's already been done
-

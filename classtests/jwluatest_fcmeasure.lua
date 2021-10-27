@@ -37,7 +37,7 @@ function FCMeasure_PropertyTests(measure)
    BoolPropertyTest(measure, "FCMeasure", "TextFlag")
    BoolPropertyTest(measure, "FCMeasure", "TextRepeatFlag")
    ObjectPropertyTest_RO(measure, "FCMeasure", "TimeSignature", "FCTimeSignature")
-   PropertyTest_RO(measure, "FCMeasure", "TimeSignatureForDisplay", true) -- true allow nil value
+   PropertyTest_RO(measure, "FCMeasure", "TimeSignatureForDisplay")
    BoolPropertyTest(measure, "FCMeasure", "UseTimeSigForDisplay")
    NumberPropertyTest(measure, "FCMeasure", "Width", {0, 100, 299})
     if Is2014OrAbove() then
