@@ -12,6 +12,7 @@ function FCCellMetrics_PropertyTests(metrics)
    NumberPropertyTest_RO(metrics, "FCCellMetrics", "SystemScaling")
    NumberPropertyTest_RO(metrics, "FCCellMetrics", "TopStafflinePos")
    NumberPropertyTest_RO(metrics, "FCCellMetrics", "Width")
+   NumberPropertyTest_RO(metrics, "FCCellMetrics", "RightBarlineWidth")
 end
 
 
