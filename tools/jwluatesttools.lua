@@ -409,7 +409,7 @@ function NumberConstantTest(constobj, constname, expectedvalue)
     -- Test expected value
     TestIncrease()
     if constobj ~= expectedvalue then
-        TestError("Constant " .. constname .. " does not have the expected value. Expected: ", expectedvalue .. "  Actual: " .. constobj)
+        TestError("Constant " .. constname .. " does not have the expected value. Expected: " .. tostring(expectedvalue) .. "  Actual: " .. tostring(constobj))
     end
 end
 

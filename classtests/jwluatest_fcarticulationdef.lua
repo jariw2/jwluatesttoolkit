@@ -11,6 +11,9 @@ function FCArticulationDef_PropertyTests(articdef)
    NumberPropertyTest(articdef, "FCArticulationDef", "AutoPosSide", {finale.ARTPOS_MANUAL_POSITIONING, 
     finale.ARTPOS_AUTO_NOTESTEM, finale.ARTPOS_ALWAYS_NOTE_SIDE, finale.ARTPOS_ALWAYS_STEM_SIDE,
     finale.ARTPOS_BELOW_ENTRY, finale.ARTPOS_ABOVE_ENTRY})
+    if finenv.FinaleVersion >= 10026 then
+        NumberPropertyTest(articdef, "FCArticulationDef", "AutoPosSide", {finale.ARTPOS_ALWAYS_ON_STEM})
+    end
    BoolPropertyTest(articdef, "FCArticulationDef", "AvoidStaffLines")
     if Is2012OrAbove() then
         NumberPropertyTest(articdef, "FCArticulationDef", "BelowSymbolChar", {0, 132, 266})
@@ -22,6 +25,9 @@ function FCArticulationDef_PropertyTests(articdef)
    NumberPropertyTest(articdef, "FCArticulationDef", "BottomDuration", {-660, 0, 660})
    NumberPropertyTest(articdef, "FCArticulationDef", "BottomVelocity", {-650, 0, 650})
    BoolPropertyTest(articdef, "FCArticulationDef", "CenterHorizontally")
+    if finenv.FinaleVersion >= 10026 then
+        BoolPropertyTest(articdef, "FCArticulationDef", "CenterOnStemWhenStemSide")
+    end    
    BoolPropertyTest(articdef, "FCArticulationDef", "CopyMainSymbol")
    BoolPropertyTest(articdef, "FCArticulationDef", "CopyMainSymbolHorizontally")
    NumberPropertyTest(articdef, "FCArticulationDef", "DefaultVerticalPos", {-289, 0, 345})
@@ -55,6 +61,14 @@ function FCArticulationDef_PropertyTests(articdef)
    NumberPropertyTest(articdef, "FCArticulationDef", "MainSymbolSize", {0, 16, 52})
    BoolPropertyTest(articdef, "FCArticulationDef", "OnScreenOnly")
    BoolPropertyTest(articdef, "FCArticulationDef", "Playback")
+   NumberPropertyTest(articdef, "FCArticulationDef", "SlurInteraction", {finale.ARTSLURINT_IGNORE, finale.ARTSLURINT_INSIDE})
+    if finenv.FinaleVersion >= 10026 then
+        NumberPropertyTest(articdef, "FCArticulationDef", "SlurInteraction", {finale.ARTSLURINT_AUTO_INOUT}) 
+        BoolPropertyTest(articdef, "FCArticulationDef", "StackAutomatically")
+    end
+    if finenv.FinaleVersion >= 10026 then
+        BoolPropertyTest(articdef, "FCArticulationDef", "StemSideWhenMultipleLayers")
+    end
    NumberPropertyTest(articdef, "FCArticulationDef", "TopAttack", {-345, 0, 345})
    NumberPropertyTest(articdef, "FCArticulationDef", "TopDuration", {-346, 0, 346})
    NumberPropertyTest(articdef, "FCArticulationDef", "TopVelocity", {-347, 0, 347})
