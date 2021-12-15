@@ -30,6 +30,9 @@ require("classtests/jwluatest_fcpage")
 require("classtests/jwluatest_fcpageformatprefs")
 require("classtests/jwluatest_fcpagegraphic")
 require("classtests/jwluatest_fcpianobraceprefs")
+if finenv.IsRGPLua then
+    require("classtests/jwluatest_fcplaybackprefs") -- FCPlaybackPrefs crashes Finale in JW Lua due to #define typo in source (fixed for RGP Lua)
+end
 require("classtests/jwluatest_fcrepeatprefs")
 require("classtests/jwluatest_fcsizeprefs")
 require("classtests/jwluatest_fcsmartshapeprefs")

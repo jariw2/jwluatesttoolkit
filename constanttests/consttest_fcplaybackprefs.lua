@@ -1,0 +1,8 @@
+function TestConstants_PLAYBACKSTARTMODE()
+   NumberConstantTest(finale.PLAYBACKSTART_MEASURE, "PLAYBACKSTART_MEASURE", 0)
+   NumberConstantTest(finale.PLAYBACKSTART_LEFTMOST, "PLAYBACKSTART_LEFTMOST", 1)
+   NumberConstantTest(finale.PLAYBACKSTART_CURRENTCOUNTER, "PLAYBACKSTART_CURRENTCOUNTER", 2)
+end
+
+-- Test the constants:
+TestConstants_PLAYBACKSTARTMODE()
