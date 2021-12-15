@@ -20,7 +20,6 @@ function Is2014BOrAbove()
     return finenv.RawFinaleVersion >= 0x12020000
 end
 
-
 -- A help method to assure a usable string value
 function __StringVersion(expression)
     if expression == nil then return "(nil)" end
@@ -119,7 +118,7 @@ function AssureKeyInTable(classtable, keyname, indexname, testtext)
     end
     -- Test parent  class info (one parent level only)
     local ptable = nil
-    if finenv.MinorVersion > 54 then
+    if finenv.IsRGPLua then
         ptable = classtable["__parent"]
         for k2, v2 in pairs(ptable) do
             ptable = _G.finale[k2]
@@ -251,7 +250,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = true
-    AssureTrue(obj:Reload(), classname .. "::Save()")
+    AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= false then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to false." )
     end
@@ -293,6 +292,52 @@ function NumberPropertyTest(obj, classname, propertyname, numbertable)
     obj[propertyname] = oldvalue
     if obj["Save"] then AssureTrue(obj:Save(), classname .. "::Save()") end
 end
+
+
+-- Test for indexed function pairs
+function NumberIndexedFunctionPairsTest(obj, classname, gettername, settername, index, numbertable, savefunction, reloadfunction)
+    if not savefunction and obj.Save then
+        savefunction = function() return obj:Save() end
+    end
+    if not reloadfunction and obj.Reload then
+        reloadfunction = function()
+            if not obj:Reload() then return nil end
+            return obj
+        end
+    end    
+    FunctionTest(obj, classname, gettername)
+    FunctionTest(obj, classname, settername)
+    -- Test to set each number in the number table
+    if numbertable == nil then
+        TestIncrease()
+        TestError("Internal error - Number test table for getter function " .. classname .. "." .. gettername .. " test is nil.")
+        return obj
+    end
+
+    local oldvalue = obj[gettername](obj, index)
+    for k, v in pairs(numbertable) do        
+        obj[settername](obj, index, v)        
+        TestIncrease()
+        if savefunction and reloadfunction then    
+            AssureTrue(savefunction(), classname .. " save function")
+            obj[settername](obj, index, oldvalue)
+            obj = reloadfunction() -- the reload function can replace the obj pointer with a new value, including nil
+            if not AssureNonNil(obj, classname .. " reload function") then
+                break
+            end
+        end
+        if obj[gettername](obj, index) ~= v then
+            TestError("Number test failure while trying to set/save " .. classname .. ":" .. settername .. " to " .. v .. " with index " .. index .. " (received ".. obj[gettername](obj, index) .. ")" )
+        end        
+    end
+    -- Restore the previous value, if reloadfunction didn't kill it
+    if obj then
+        obj[settername](obj, index, oldvalue)
+        if savefunction then AssureTrue(savefunction(), classname .. " save function") end
+    end
+    return obj
+end
+
 
 
 -- Test for number properties read-only)

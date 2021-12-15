@@ -5,7 +5,7 @@ function TestConstants_ARTPOS_()
    NumberConstantTest(finale.ARTPOS_AUTO_NOTESTEM, "ARTPOS_AUTO_NOTESTEM", 1)
    NumberConstantTest(finale.ARTPOS_BELOW_ENTRY, "ARTPOS_BELOW_ENTRY", 4)
    NumberConstantTest(finale.ARTPOS_MANUAL_POSITIONING, "ARTPOS_MANUAL_POSITIONING", 0)
-   NumberConstantTest(finale.ARTPOS_ALWAYS_ON_STEM, "ARTPOS_MANUAL_POSITIONING", 6)
+   NumberConstantTest(finale.ARTPOS_ALWAYS_ON_STEM, "ARTPOS_ALWAYS_ON_STEM", 6)
 
    NumberConstantTest(finale.ARTSLURINT_IGNORE, "ARTSLURINT_IGNORE", 0)
    NumberConstantTest(finale.ARTSLURINT_INSIDE, "ARTSLURINT_INSIDE", 1)
