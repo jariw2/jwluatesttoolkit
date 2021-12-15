@@ -4,7 +4,10 @@ function FCPlaybackPrefs_PropertyTests(pref)
     NumberPropertyTest(pref, "FCPlaybackPrefs", "MetronomeSpeed", {30, 60, 96, 120, 144})
     NumberPropertyTest(pref, "FCPlaybackPrefs", "StartMeasure", {1, 10, 20})
     NumberPropertyTest(pref, "FCPlaybackPrefs", "StopMeasure", {1, 10, 20})
-    NumberPropertyTest(pref, "FCPlaybackPrefs", "StartMode", {finale.PLAYBACKSTART_MEASURE, finale.PLAYBACKSTART_LEFTMOST,  finale.PLAYBACKSTART_CURRENTCOUNTER})
+    if finenv.IsRGPLua then
+        -- a typo in the PDK Framework source code (now fixed in RGP Lua) caused JW Lua to crash Finale if it executed this line:
+        NumberPropertyTest(pref, "FCPlaybackPrefs", "StartMode", {finale.PLAYBACKSTART_MEASURE, finale.PLAYBACKSTART_LEFTMOST,  finale.PLAYBACKSTART_CURRENTCOUNTER})
+    end
     NumberPropertyTest(pref, "FCPlaybackPrefs", "Swing", {10, 100, 100, 10000})
 end
 
