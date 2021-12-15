@@ -20,6 +20,10 @@ function Is2014BOrAbove()
     return finenv.RawFinaleVersion >= 0x12020000
 end
 
+function Is26_2OrAbove()    
+    return finenv.RawFinaleVersion >= 0x1a020000
+end
+
 -- A help method to assure a usable string value
 function __StringVersion(expression)
     if expression == nil then return "(nil)" end
@@ -296,6 +300,7 @@ end
 
 -- Test for indexed function pairs
 function NumberIndexedFunctionPairsTest(obj, classname, gettername, settername, index, numbertable, savefunction, reloadfunction)
+    if not AssureNonNil(obj, "nil passed to NumberIndexedFunctionPairsTest for " .. classname .. "." .. gettername .. " index " .. index) then return nil end
     if not savefunction and obj.Save then
         savefunction = function() return obj:Save() end
     end

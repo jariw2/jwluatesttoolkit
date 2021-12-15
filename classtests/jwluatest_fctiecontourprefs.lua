@@ -1,15 +1,17 @@
 function FCTieContourPrefs_PropertyTests(prefs, index, savefunction, reloadfunction)
-   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetHorizontalStart", "SetHorizontalStart", index, {-144, 0, 144}, savefunction, reloadfunction)
-   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetVerticalStart", "SetVerticalStart", index, {-144, 0, 144}, savefunction, reloadfunction)
-   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetHorizontalEnd", "SetHorizontalEnd", index, {-144, 0, 144}, savefunction, reloadfunction)
-   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetVerticalEnd", "SetVerticalEnd", index, {-144, 0, 144}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftFixedInset", "SetLeftFixedInset", index, {-144, 0, 144}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftHeight", "SetLeftHeight", index, {-144, 0, 144}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftRelativeInset", "SetLeftRelativeInset", index, {0.0, 6.0, 12.0}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightFixedInset", "SetRightFixedInset", index, {-144, 0, 144}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightHeight", "SetRightHeight", index, {-144, 0, 144}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightRelativeInset", "SetRightRelativeInset", index, {0.0, 6.0, 12.0}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetSpan", "SetSpan", index, {-144, 0, 144}, savefunction, reloadfunction)
    return prefs
 end
 
 -- Call:
-local indeces = {finale.TIEPLACE_OVERINNER, finale.TIEPLACE_UNDERINNER, finale.TIEPLACE_OVEROUTERNOTE,
-                                    finale.TIEPLACE_UNDEROUTERNOTE , finale.TIEPLACE_OVEROUTERSTEM, finale.TIEPLACE_UNDEROUTERSTEM}
-if false then -- finenv.IsRGPLua then
+local indeces = {finale.TCONTOURIDX_SHORT, finale.TCONTOURIDX_MEDIUM, finale.TCONTOURIDX_LONG, finale.TCONTOURIDX_TIEENDS}
+if finenv.IsRGPLua then
     local tieprefs = finale.FCTiePrefs()
     AssureTrue(tieprefs:Load(1), "FCTiePrefs::Load() for FCTieContourPrefs")
     local prefs = tieprefs:CreateTieContourPrefs()
