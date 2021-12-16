@@ -403,10 +403,19 @@ function BoolValuePropertyTest(obj, classname, propertyname, expectedvalue)
     TestIncrease()
     if obj[propertyname] ~= expectedvalue then
         TestError("Loaded boolean value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname]) .. " instead of " .. BoolString(expectedvalue))
+    else
+        if obj["Set" .. propertyname] then
+            local tryvalue = not expectedvalue
+            obj[propertyname] = tryvalue
+            if obj[propertyname] ~= tryvalue then
+                TestError("Tried number value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname])  .. " instead of " .. BoolString(tryvalue))
+            end
+            obj[propertyname] = expectedvalue
+        end
     end
 end
 
-function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue)    
+function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue, tryvalue)    
     PropertyTest(obj, classname, propertyname)
     if not AssureType(obj[propertyname], "number", "property " .. classname .. "." .. propertyname) then return end
     if obj[propertyname] ~= expectedvalue then
@@ -414,6 +423,14 @@ function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue)
             TestError("Loaded number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of nil")
         else
             TestError("Loaded number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of " .. expectedvalue)
+        end
+    else
+        if tryvalue and obj["Set" .. propertyname] then
+            obj[propertyname] = tryvalue
+            if obj[propertyname] ~= tryvalue then
+                TestError("Tried number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of " .. tryvalue)
+            end
+            obj[propertyname] = expectedvalue
         end
     end
 end

@@ -1,0 +1,39 @@
+function TestConstants_TUPLETPLACEMENTMODE_()
+   NumberConstantTest(finale.TUPLETPLACEMENT_MANUAL, "TUPLETPLACEMENT_MANUAL", 0)
+   NumberConstantTest(finale.TUPLETPLACEMENT_STEMSIDE, "TUPLETPLACEMENT_STEMSIDE", 1)
+   NumberConstantTest(finale.TUPLETPLACEMENT_NOTESIDE, "TUPLETPLACEMENT_NOTESIDE", 2)
+   NumberConstantTest(finale.TUPLETPLACEMENT_ABOVE, "TUPLETPLACEMENT_ABOVE", 3)
+   NumberConstantTest(finale.TUPLETPLACEMENT_BELOW , "TUPLETPLACEMENT_BELOW ", 4)
+end
+
+-- Test the constants:
+TestConstants_TUPLETPLACEMENTMODE_()
+
+function TestConstants_TUPLETNUMBERSTYLE_()
+   NumberConstantTest(finale.TUPLETNUMBER_NONE, "TUPLETNUMBER_NONE", 0)
+   NumberConstantTest(finale.TUPLETNUMBER_REGULAR, "TUPLETNUMBER_REGULAR", 1)
+   NumberConstantTest(finale.TUPLETNUMBER_RATIO, "TUPLETNUMBER_RATIO", 2)
+   NumberConstantTest(finale.TUPLETNUMBER_RATIOANDNOTE, "TUPLETNUMBER_RATIOANDNOTE", 3)
+   NumberConstantTest(finale.TUPLETNUMBER_RATIOANDNOTE_BOTH  , "TUPLETNUMBER_RATIOANDNOTE_BOTH  ", 4)
+end
+
+-- Test the constants:
+TestConstants_TUPLETNUMBERSTYLE_()
+
+function TestConstants_TUPLETSHAPESTYLE_()
+   NumberConstantTest(finale.TUPLETSHAPE_NONE, "TUPLETSHAPE_NONE", 0)
+   NumberConstantTest(finale.TUPLETSHAPE_BRACKET, "TUPLETSHAPE_BRACKET", 1)
+   NumberConstantTest(finale.TUPLETSHAPE_SLUR, "TUPLETSHAPE_SLUR", 2)
+end
+
+-- Test the constants:
+TestConstants_TUPLETSHAPESTYLE_()
+
+function TestConstants_TUPLETBRACKETMODE_()
+   NumberConstantTest(finale.TUPLETBRACKET_ALWAYS, "TUPLETBRACKET_ALWAYS", 0)
+   NumberConstantTest(finale.TUPLETBRACKET_UNBEAMEDONLY, "TUPLETBRACKET_UNBEAMEDONLY", 1)
+   NumberConstantTest(finale.TUPLETBRACKET_NEVERBEAMEDONBEAMSIDE, "TUPLETBRACKET_NEVERBEAMEDONBEAMSIDE", 2)
+end
+
+-- Test the constants:
+TestConstants_TUPLETBRACKETMODE_()
