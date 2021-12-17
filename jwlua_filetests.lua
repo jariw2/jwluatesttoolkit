@@ -49,6 +49,7 @@ require("objecttests/jwluatest_obj_fcstaffstyledef")
 require("objecttests/jwluatest_obj_fctextexpressiondef")
 require("objecttests/jwluatest_obj_fctextrepeat")
 require("objecttests/jwluatest_obj_fctextrepeatdef")
+require("objecttests/jwluatest_obj_fctieprefs")
 
 -- Output the results from the tests:
 PrintTestResult()
