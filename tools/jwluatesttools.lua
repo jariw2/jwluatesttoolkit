@@ -480,6 +480,33 @@ function NumberConstantTest(constobj, constname, expectedvalue)
     end
 end
 
+function NumberIndexValueTest(obj, classname, numberfunction, index, expectedvalue)
+    -- Test for nil
+    TestIncrease()
+    if not obj then
+        TestError("Class " .. classname .. " doesn't exist.")
+        return
+    end
+    -- Test for method
+    TestIncrease()
+    if not obj[numberfunction] then
+        TestError(numberfunction .. " is not a method in class " .. classname)
+        return
+    end
+    local val = obj[numberfunction](obj, index)
+    -- Test type
+    TestIncrease()
+    if type(val) ~= "number" then
+        TestError(classname .. ":" .. numberfunction .. " does not return a number constant. It returns type: " .. type(val))
+        return
+    end
+    -- Test expected value
+    TestIncrease()
+    if val ~= expectedvalue then
+        TestError(classname .. ":" .. numberfunction .. " does not have the expected value. Expected: " .. tostring(expectedvalue) .. "  Actual: " .. tostring(val))
+    end
+end
+
 function StringConstantTest(constobj, constname, expectedvalue)
     -- Test for nil
     TestIncrease()
