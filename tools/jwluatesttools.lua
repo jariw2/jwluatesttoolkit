@@ -344,6 +344,7 @@ end
 
 -- Test for indexed function pairs
 function BoolIndexedFunctionPairsTest(obj, classname, gettername, settername, index, savefunction, reloadfunction)
+    if not AssureNonNil(index, "nil index passed to BoolIndexedFunctionPairsTest for " .. classname .. "." .. gettername) then return nil end
     if not AssureNonNil(obj, "nil passed to BoolIndexedFunctionPairsTest for " .. classname .. "." .. gettername .. " index " .. index) then return nil end
     if not savefunction and obj.Save then
         savefunction = function() return obj:Save() end
