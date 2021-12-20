@@ -20,6 +20,9 @@ function Is2014BOrAbove()
     return finenv.RawFinaleVersion >= 0x12020000
 end
 
+function Is26_2OrAbove()    
+    return finenv.RawFinaleVersion >= 0x1a020000
+end
 
 -- A help method to assure a usable string value
 function __StringVersion(expression)
@@ -119,7 +122,7 @@ function AssureKeyInTable(classtable, keyname, indexname, testtext)
     end
     -- Test parent  class info (one parent level only)
     local ptable = nil
-    if finenv.MinorVersion > 54 then
+    if finenv.IsRGPLua then
         ptable = classtable["__parent"]
         for k2, v2 in pairs(ptable) do
             ptable = _G.finale[k2]
@@ -251,7 +254,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = true
-    AssureTrue(obj:Reload(), classname .. "::Save()")
+    AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= false then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to false." )
     end
@@ -292,6 +295,91 @@ function NumberPropertyTest(obj, classname, propertyname, numbertable)
     -- Restore the previous value
     obj[propertyname] = oldvalue
     if obj["Save"] then AssureTrue(obj:Save(), classname .. "::Save()") end
+end
+
+-- Test for indexed function pairs
+function NumberIndexedFunctionPairsTest(obj, classname, gettername, settername, index, numbertable, savefunction, reloadfunction)
+    if not AssureNonNil(obj, "nil passed to NumberIndexedFunctionPairsTest for " .. classname .. "." .. gettername .. " index " .. index) then return nil end
+    if not savefunction and obj.Save then
+        savefunction = function() return obj:Save() end
+    end
+    if not reloadfunction and obj.Reload then
+        reloadfunction = function()
+            if not obj:Reload() then return nil end
+            return obj
+        end
+    end    
+    FunctionTest(obj, classname, gettername)
+    FunctionTest(obj, classname, settername)
+    -- Test to set each number in the number table
+    if numbertable == nil then
+        TestIncrease()
+        TestError("Internal error - Number test table for getter function " .. classname .. "." .. gettername .. " test is nil.")
+        return obj
+    end
+
+    local oldvalue = obj[gettername](obj, index)
+    for k, v in pairs(numbertable) do        
+        obj[settername](obj, index, v)        
+        TestIncrease()
+        if savefunction and reloadfunction then    
+            AssureTrue(savefunction(), classname .. " save function")
+            obj[settername](obj, index, oldvalue)
+            obj = reloadfunction() -- the reload function can replace the obj pointer with a new value, including nil
+            if not AssureNonNil(obj, classname .. " reload function") then
+                break
+            end
+        end
+        if obj[gettername](obj, index) ~= v then
+            TestError("Number test failure while trying to set/save " .. classname .. ":" .. settername .. " to " .. v .. " with index " .. index .. " (received ".. obj[gettername](obj, index) .. ")" )
+        end        
+    end
+    -- Restore the previous value, if reloadfunction didn't kill it
+    if obj then
+        obj[settername](obj, index, oldvalue)
+        if savefunction then AssureTrue(savefunction(), classname .. " save function") end
+    end
+    return obj
+end
+
+-- Test for indexed function pairs
+function BoolIndexedFunctionPairsTest(obj, classname, gettername, settername, index, savefunction, reloadfunction)
+    if not AssureNonNil(index, "nil index passed to BoolIndexedFunctionPairsTest for " .. classname .. "." .. gettername) then return nil end
+    if not AssureNonNil(obj, "nil passed to BoolIndexedFunctionPairsTest for " .. classname .. "." .. gettername .. " index " .. index) then return nil end
+    if not savefunction and obj.Save then
+        savefunction = function() return obj:Save() end
+    end
+    if not reloadfunction and obj.Reload then
+        reloadfunction = function()
+            if not obj:Reload() then return nil end
+            return obj
+        end
+    end    
+    FunctionTest(obj, classname, gettername)
+    FunctionTest(obj, classname, settername)
+
+    local oldvalue = obj[gettername](obj, index)
+    for k, v in pairs({true, false}) do        
+        obj[settername](obj, index, v)        
+        TestIncrease()
+        if savefunction and reloadfunction then    
+            AssureTrue(savefunction(), classname .. " save function")
+            obj[settername](obj, index, oldvalue)
+            obj = reloadfunction() -- the reload function can replace the obj pointer with a new value, including nil
+            if not AssureNonNil(obj, classname .. " reload function") then
+                break
+            end
+        end
+        if obj[gettername](obj, index) ~= v then
+            TestError("Boolean test failure while trying to set/save " .. classname .. ":" .. settername .. " to " .. v .. " with index " .. index .. " (received ".. obj[gettername](obj, index) .. ")" )
+        end        
+    end
+    -- Restore the previous value, if reloadfunction didn't kill it
+    if obj then
+        obj[settername](obj, index, oldvalue)
+        if savefunction then AssureTrue(savefunction(), classname .. " save function") end
+    end
+    return obj
 end
 
 
@@ -353,10 +441,19 @@ function BoolValuePropertyTest(obj, classname, propertyname, expectedvalue)
     TestIncrease()
     if obj[propertyname] ~= expectedvalue then
         TestError("Loaded boolean value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname]) .. " instead of " .. BoolString(expectedvalue))
+    else
+        if obj["Set" .. propertyname] then
+            local tryvalue = not expectedvalue
+            obj[propertyname] = tryvalue
+            if obj[propertyname] ~= tryvalue then
+                TestError("Tried number value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname])  .. " instead of " .. BoolString(tryvalue))
+            end
+            obj[propertyname] = expectedvalue
+        end
     end
 end
 
-function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue)    
+function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue, tryvalue)    
     PropertyTest(obj, classname, propertyname)
     if not AssureType(obj[propertyname], "number", "property " .. classname .. "." .. propertyname) then return end
     if obj[propertyname] ~= expectedvalue then
@@ -364,6 +461,14 @@ function NumberValuePropertyTest(obj, classname, propertyname, expectedvalue)
             TestError("Loaded number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of nil")
         else
             TestError("Loaded number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of " .. expectedvalue)
+        end
+    else
+        if tryvalue and obj["Set" .. propertyname] then
+            obj[propertyname] = tryvalue
+            if obj[propertyname] ~= tryvalue then
+                TestError("Tried number value for " .. classname .. "." .. propertyname .. " was " .. obj[propertyname] .. " instead of " .. tryvalue)
+            end
+            obj[propertyname] = expectedvalue
         end
     end
 end
@@ -409,7 +514,34 @@ function NumberConstantTest(constobj, constname, expectedvalue)
     -- Test expected value
     TestIncrease()
     if constobj ~= expectedvalue then
-        TestError("Constant " .. constname .. " does not have the expected value. Expected: ", expectedvalue .. "  Actual: " .. constobj)
+        TestError("Constant " .. constname .. " does not have the expected value. Expected: " .. tostring(expectedvalue) .. "  Actual: " .. tostring(constobj))
+    end
+end
+
+function NumberIndexValueTest(obj, classname, numberfunction, index, expectedvalue)
+    -- Test for nil
+    TestIncrease()
+    if not obj then
+        TestError("Class " .. classname .. " doesn't exist.")
+        return
+    end
+    -- Test for method
+    TestIncrease()
+    if not obj[numberfunction] then
+        TestError(numberfunction .. " is not a method in class " .. classname)
+        return
+    end
+    local val = obj[numberfunction](obj, index)
+    -- Test type
+    TestIncrease()
+    if type(val) ~= "number" then
+        TestError(classname .. ":" .. numberfunction .. " does not return a number constant. It returns type: " .. type(val))
+        return
+    end
+    -- Test expected value
+    TestIncrease()
+    if val ~= expectedvalue then
+        TestError(classname .. ":" .. numberfunction .. " does not have the expected value. Expected: " .. tostring(expectedvalue) .. "  Actual: " .. tostring(val))
     end
 end
 

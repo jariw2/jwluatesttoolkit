@@ -1,6 +1,6 @@
 function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   return "JW Lua - All Tests", "All Tests", "Run all the JW Lua tests. Requires the debug file template."end
 
-if finenv.MinorVersion > 54 then -- if new lua
+if finenv.IsRGPLua then -- if new lua
     require('mobdebug').start()
 end
 
