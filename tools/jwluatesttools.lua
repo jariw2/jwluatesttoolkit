@@ -264,7 +264,7 @@ end
 
 -- Test for read-only boolean properties
 function BoolPropertyTest_RO(obj, classname, propertyname)
-    PropertyTest(obj, classname, propertyname, numbertable)
+    PropertyTest_RO(obj, classname, propertyname, numbertable)
     if not AssureType(obj[propertyname], "boolean", "property " .. classname .. "." .. propertyname) then return end
 end
 
