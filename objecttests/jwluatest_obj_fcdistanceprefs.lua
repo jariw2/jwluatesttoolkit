@@ -1,4 +1,5 @@
 function FCDistancePrefs_ValueTests_ItemNo1(distanceprefs)
+   BoolValuePropertyTest(distanceprefs, "FCDistancePrefs", "AccidentalCrossLayerPositioning", true)
    NumberValuePropertyTest(distanceprefs, "FCDistancePrefs", "AccidentalMultiCharSpace", 4)
    NumberValuePropertyTest(distanceprefs, "FCDistancePrefs", "AccidentalMultiSpace", 8, 12)
    NumberValuePropertyTest(distanceprefs, "FCDistancePrefs", "AccidentalNoteSpace", 8, 12)

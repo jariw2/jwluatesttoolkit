@@ -22,6 +22,7 @@ require("tools/jwluatesttools")
 
 -- Load and execute the tests for the classes:
 require("objecttests/jwluatest_obj_fcaccidentalmod")
+require("objecttests/jwluatest_obj_fcarticulation")
 require("objecttests/jwluatest_obj_fcarticulationdef")
 require("objecttests/jwluatest_obj_fcbackwardrepeat")
 require("objecttests/jwluatest_obj_fccategorydef")
