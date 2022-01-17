@@ -87,3 +87,14 @@ if AssureTrue(framehold:Load(), "FCCellFrameHold:Load()") then
     end
 end
 
+for meas = 1, 2 do
+    for staff = 1,3 do
+        cell = finale.FCCell(meas, staff)
+        local clefindex = 0
+        if staff == 3 then
+            clefindex = 3
+        end
+        AssureTrue(cell:CalcClefIndexAt(0) == clefindex, "FCCell:CalcClefIndexAt("..tostring(meas)..", "..tostring(staff) ..") returned "..tostring(cell:CalcClefIndexAt(0)).." expected "..tostring(clefindex)..".")
+    end
+end
+
