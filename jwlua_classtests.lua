@@ -35,6 +35,7 @@ require("classtests/jwluatest_fcpageformatprefs")
 require("classtests/jwluatest_fcpagegraphic")
 --require("classtests/jwluatest_fcpartextractprefs") -- not actually accessible from Lua
 require("classtests/jwluatest_fcpartscopeprefs")
+require("classtests/jwluatest_fcpartstaffvoicing")
 require("classtests/jwluatest_fcpianobraceprefs")
 require("classtests/jwluatest_fcplaybackprefs") -- FCPlaybackPrefs crashes Finale in JW Lua due to #define typo in source (fixed for RGP Lua)
 require("classtests/jwluatest_fcrepeatprefs")
