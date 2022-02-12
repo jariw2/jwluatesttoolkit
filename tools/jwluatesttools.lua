@@ -435,14 +435,14 @@ function BoolString(boolval)
     return "false"
 end
 
-function BoolValuePropertyTest(obj, classname, propertyname, expectedvalue)
+function BoolValuePropertyTest(obj, classname, propertyname, expectedvalue, read_only)
     PropertyTest(obj, classname, propertyname)
     if not AssureType(obj[propertyname], "boolean", "property " .. classname .. "." .. propertyname) then return end
     TestIncrease()
     if obj[propertyname] ~= expectedvalue then
         TestError("Loaded boolean value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname]) .. " instead of " .. BoolString(expectedvalue))
     else
-        if obj["Set" .. propertyname] then
+        if (not read_only) and obj["Set" .. propertyname] then
             local tryvalue = not expectedvalue
             obj[propertyname] = tryvalue
             if obj[propertyname] ~= tryvalue then

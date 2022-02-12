@@ -8,6 +8,8 @@ function FCMultiMeasureRestPrefs_ValueTests_ItemNo1(prefs)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "StartNumberingAt", 2, 5)
    if finenv.RawFinaleVersion >= 0x1b200000 then -- Fin27.2
       BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "StretchHorizontally", true)
+   else
+      BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "StretchHorizontally", true, true)
    end
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "SymbolSpace", 48, 36)
    BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "UseSymbols", false)
