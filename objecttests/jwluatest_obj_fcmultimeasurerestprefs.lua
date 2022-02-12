@@ -6,6 +6,9 @@ function FCMultiMeasureRestPrefs_ValueTests_ItemNo1(prefs)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "ShapeStartAdjust", 30, 20)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "ShapeID", 50, 1)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "StartNumberingAt", 2, 5)
+   if finenv.RawFinaleVersion >= 0x1b200000 then -- Fin27.2
+      BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "StretchHorizontally", true)
+   end
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "SymbolSpace", 48, 36)
    BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "UseSymbols", false)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "UseSymbolsLessThan", 9, 5)
