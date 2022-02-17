@@ -446,7 +446,7 @@ function BoolValuePropertyTest(obj, classname, propertyname, expectedvalue, read
             local tryvalue = not expectedvalue
             obj[propertyname] = tryvalue
             if obj[propertyname] ~= tryvalue then
-                TestError("Tried number value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname])  .. " instead of " .. BoolString(tryvalue))
+                TestError("Tried boolean value for " .. classname .. "." .. propertyname .. " was " .. BoolString(obj[propertyname])  .. " instead of " .. BoolString(tryvalue))
             end
             obj[propertyname] = expectedvalue
         end

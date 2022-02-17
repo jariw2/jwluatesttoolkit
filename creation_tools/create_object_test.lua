@@ -71,6 +71,10 @@ function CreateCode(obj, ClassNameToFind, PassedArgument)
         -- Note entry
         funcsuffix = "_Entry" .. obj:GetNoteEntry().Measure .. "_" .. obj:GetNoteEntry().Staff .. "_" .. obj.ItemEntnum
         loadinfo = "" .. obj:GetNoteEntry().Measure  .. ", " .. obj:GetNoteEntry().Staff .. ", " .. obj.ItemEntnum
+    elseif obj.NoteID then
+        -- Note
+        funcsuffix = "_Note" .. obj:GetEntry().Measure .. "_" .. obj:GetEntry().Staff .. "_" .. obj:GetEntry().EntryNumber .. "_" .. obj.NoteID
+        loadinfo = "" .. obj:GetEntry().Measure  .. ", " .. obj:GetEntry().Staff .. ", " .. obj:GetEntry().EntryNumber .. ", " .. obj.NoteID
     else
         print ("Need fix: Couldn't locate item locators (cmpers/incis/etc)")
         return
@@ -79,8 +83,14 @@ function CreateCode(obj, ClassNameToFind, PassedArgument)
     -- Create the function skeleton
     TestOutput = "function " .. ClassNameToFind .. "_ValueTests" .. funcsuffix .. "(" .. PassedArgument .. ")\n"
     for k,v in pairs(_G.finale) do
-        if k == ClassNameToFind and v.__class then        
-            if DumpClassTable(v.__class, ClassNameToFind, PassedArgument, obj) then processed = true end       
+        if k == ClassNameToFind then
+            if not finenv.IsRGPLua then
+                if v.__class then
+                    if DumpClassTable(v.__class, ClassNameToFind, PassedArgument, obj) then processed = true end
+                end
+            else
+                if DumpClassTable(v, ClassNameToFind, PassedArgument, obj) then processed = true end
+            end
         end
     end
     -- Create the function call
@@ -121,7 +131,21 @@ end
 
 -- The actual code to process an object (modify as needed):
 
+if finenv.IsRGPLua then
+    require('mobdebug').start()
+end
 
+for entry in eachentry(finenv.Region()) do
+    for note in each(entry) do
+        if note.NoteID > 1 then
+            ProcessObject(note, "note")
+            break
+        end
+    end
+end
+
+--[[
 local p = finale.FCStaffStyleDef()
 p:Load(1)
 ProcessObject(p, "ssd")
+]]
