@@ -41,17 +41,6 @@ function FCNoteEntry_ValueTests_Cell5_3(entry)
 end
 
 -- Call:
-local region = finale.FCMusicRegion()
-region.StartMeasure = 5
-region.StartStaff = 3
-region.StartMeasurePos = 0
-region.EndMeasure = 5
-region.EndStaff = 3
-region.EndMeasurePos = 1023
-local got1 = false
-for entry in eachentry(region) do
-    FCNoteEntry_ValueTests_Cell5_3(entry)
-    got1 = true
-    break
-end
-AssureTrue(got1, "FCNoteEntry at (5, 3, 0) not found.")
+local entry = LoadMeasureEntry(5, 3, 135)
+AssureTrue(entry ~= nil, "LoadMeasureEntry(LoadMeasureEntry(5, 3, 135) for FCNoteEntry")
+FCNoteEntry_ValueTests_Cell5_3(entry)

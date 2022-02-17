@@ -570,6 +570,6 @@ end
 function LoadMeasureEntry(measureno, staffno, entryid)
     if LME_notecell then LME_notecell:ClearFrame() end
     LME_notecell = finale.FCNoteEntryCell(measureno, staffno)
-    LME_notecell:Load()
+    AssureTrue(LME_notecell:Load(), "LME_notecell:Load() in LoadMeasureEntry")
     return LME_notecell:FindEntryNumber(entryid)    
 end

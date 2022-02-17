@@ -36,28 +36,19 @@ function FCNote_ValueTests_Note5_3_135_2(note)
    BoolValuePropertyTest(note, "FCNote", "UpstemSplit", false)
 end
 
-
 -- Call:
-local region = finale.FCMusicRegion()
-region.StartMeasure = 5
-region.StartStaff = 3
-region.StartMeasurePos = 0
-region.EndMeasure = 5
-region.EndStaff = 3
-region.EndMeasurePos = 1023
+local entry = LoadMeasureEntry(5, 3, 135)
+AssureTrue(entry ~= nil, "LoadMeasureEntry(LoadMeasureEntry(5, 3, 135) for FCNote")
 local got1 = false
 local got2 = false
-for entry in eachentry(region) do
-    for note in each(entry) do
-        if note.NoteID == 1 then
-            FCNote_ValueTests_Note5_3_135_1(note)
-            got1 = true
-        end
-        if note.NoteID == 2 then
-            FCNote_ValueTests_Note5_3_135_2(note)
-            got2 = true
-        end
+for note in each(entry) do
+    if note.NoteID == 1 then
+        FCNote_ValueTests_Note5_3_135_1(note)
+        got1 = true
     end
-    break
+    if note.NoteID == 2 then
+        FCNote_ValueTests_Note5_3_135_2(note)
+        got2 = true
+    end
 end
 AssureTrue(got1 and got2, "FCNotes at (5, 3, 0) not found.")
