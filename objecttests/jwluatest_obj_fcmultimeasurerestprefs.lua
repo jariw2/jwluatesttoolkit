@@ -1,5 +1,5 @@
 function FCMultiMeasureRestPrefs_ValueTests_ItemNo1(prefs)
-   BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "AutoUpdate", true)
+   BoolValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "AutoUpdate", false)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "NumberHorizontalAdjust", 0, -2)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "NumberVerticalAdjust", -32, 2)
    NumberValuePropertyTest(prefs, "FCMultiMeasureRestPrefs", "ShapeEndAdjust", -30, 20)

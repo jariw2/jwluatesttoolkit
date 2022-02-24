@@ -2,7 +2,7 @@ function plugindef()
    -- This function and the 'finaleplugin' namespace
    -- are both reserved for the plug-in definition.
    finaleplugin.NoStore = true
-   return "JW Lua File Tests", "File Tests", "Test the validity of JW Lua classes against a specific debug file."
+   return "Finale Lua File Tests", "File Tests", "Test the validity of Finale Lua classes against a specific debug file."
 end
 
 -- Validate the current file prior to the test:
@@ -38,6 +38,7 @@ require("objecttests/jwluatest_obj_fcgridsguidesprefs")
 require("objecttests/jwluatest_obj_fclyricsprefs")
 require("objecttests/jwluatest_obj_fcmeasure")
 require("objecttests/jwluatest_obj_fcmiscdocprefs")
+require("objecttests/jwluatest_obj_fcmultimeasurerest")
 require("objecttests/jwluatest_obj_fcmultimeasurerestprefs")
 require("objecttests/jwluatest_obj_fcmusiccharacterprefs")
 require("objecttests/jwluatest_obj_fcnamepositionprefs")

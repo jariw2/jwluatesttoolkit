@@ -2,7 +2,7 @@ function plugindef()
    -- This function and the 'finaleplugin' namespace
    -- are both reserved for the plug-in definition.
    finaleplugin.NoStore = true
-   return "JW Lua Constants Tests", "Constants Tests", "Test the validity of the JW Lua constants."
+   return "Finale Lua Constants Tests", "Constants Tests", "Test the validity of the Finale Lua constants."
 end
 
 -- Load the toolkit  functions needed for the tests:

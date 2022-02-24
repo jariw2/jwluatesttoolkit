@@ -1,4 +1,4 @@
-function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   finaleplugin.Author = "Jari Williamsson"   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"   return "Create JW Lua Constants Test", "Create constants test", "Creates a test for the constants available to JW Lua."end
+function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   finaleplugin.Author = "Jari Williamsson"   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"   return "Create Finale Lua Constants Test", "Create constants test", "Creates a test for the constants available to Finale Lua."end
 
 -- Show dialog
 local dialog = finenv.UserValueInput()dialog.Title = "Test JW Lua Constants"dialog:SetTypes("String")dialog:SetDescriptions("Search string (empty to list all):")

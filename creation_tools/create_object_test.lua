@@ -135,6 +135,7 @@ if finenv.IsRGPLua then
     require('mobdebug').start()
 end
 
+--[[
 for entry in eachentry(finenv.Region()) do
     for note in each(entry) do
         if note.NoteID > 1 then
@@ -143,9 +144,10 @@ for entry in eachentry(finenv.Region()) do
         end
     end
 end
-
---[[
-local p = finale.FCStaffStyleDef()
-p:Load(1)
-ProcessObject(p, "ssd")
 ]]
+
+
+local p = finale.FCMultiMeasureRest()
+p:Load(39)
+ProcessObject(p, "obj")
+
