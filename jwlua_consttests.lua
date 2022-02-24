@@ -2,7 +2,7 @@ function plugindef()
    -- This function and the 'finaleplugin' namespace
    -- are both reserved for the plug-in definition.
    finaleplugin.NoStore = true
-   return "JW Lua Constants Tests", "Constants Tests", "Test the validity of the JW Lua constants."
+   return "Finale Lua Constants Tests", "Constants Tests", "Test the validity of the Finale Lua constants."
 end
 
 -- Load the toolkit  functions needed for the tests:
@@ -24,6 +24,7 @@ require("constanttests/consttest_fcmusicspacingprefs")
 require("constanttests/consttest_fcnoteentry")
 require("constanttests/consttest_fcpagegraphic")
 require("constanttests/consttest_fcpagetext")
+require("constanttests/consttest_fcpartstaffvoicing")
 require("constanttests/consttest_fcplaybackprefs")
 require("constanttests/consttest_fcrepeatprefs")
 require("constanttests/consttest_fcresourcewindow")

@@ -21,6 +21,15 @@ function FCCustomSmartLineDef_PropertyTests(customlinedef)
 
    PropertyTest(customlinedef, "FCCustomSmartLineDef", "StartArrowheadStyle", {finale.CLENDPOINT_NONE, finale.CLENDPOINT_PRESET, finale.CLENDPOINT_CUSTOM, finale.CLENDPOINT_HOOK})
    PropertyTest(customlinedef, "FCCustomSmartLineDef", "StartHookLength", {-300, 0, 300})
+   
+    BoolPropertyTest(customlinedef, "FCCustomSmartLineDef", "UseAfterStartTextOffset")
+    NumberPropertyTest(customlinedef, "FCCustomSmartLineDef", "StartLineHorizontalOffset", {-48, 0, 144})
+    BoolPropertyTest(customlinedef, "FCCustomSmartLineDef", "UseBeforeEndTextOffset")
+    NumberPropertyTest(customlinedef, "FCCustomSmartLineDef", "EndLineHorizontalOffset", {-48, 0, 144})
+    BoolPropertyTest(customlinedef, "FCCustomSmartLineDef", "UseAfterContinuationTextOffset")
+    NumberPropertyTest(customlinedef, "FCCustomSmartLineDef", "ContinuationLineHorizontalOffset", {-48, 0, 144})
+    NumberPropertyTest(customlinedef, "FCCustomSmartLineDef", "LineVerticalOffset", {-48, 0, 23})
+
 end
 
 

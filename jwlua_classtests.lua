@@ -2,7 +2,7 @@ function plugindef()
    -- This function and the 'finaleplugin' namespace
    -- are both reserved for the plug-in definition.
    finaleplugin.NoStore = true
-   return "JW Lua Class Tests", "Class Tests", "Test the validity of JW Lua classes"
+   return "Finale Lua Class Tests", "Class Tests", "Test the validity of Finale Lua classes"
 end
 
 -- Load the toolkit  functions needed for the tests:
@@ -25,6 +25,7 @@ require("classtests/jwluatest_fclayerprefs")
 require("classtests/jwluatest_fclyricsprefs")
 require("classtests/jwluatest_fcmeasure")
 require("classtests/jwluatest_fcmiscdocprefs")
+require("classtests/jwluatest_fcmultimeasurerest")
 require("classtests/jwluatest_fcmultimeasurerestprefs")
 require("classtests/jwluatest_fcmusiccharacterprefs")
 require("classtests/jwluatest_fcmusicspacingprefs")
@@ -35,6 +36,7 @@ require("classtests/jwluatest_fcpageformatprefs")
 require("classtests/jwluatest_fcpagegraphic")
 --require("classtests/jwluatest_fcpartextractprefs") -- not actually accessible from Lua
 require("classtests/jwluatest_fcpartscopeprefs")
+require("classtests/jwluatest_fcpartstaffvoicing")
 require("classtests/jwluatest_fcpianobraceprefs")
 require("classtests/jwluatest_fcplaybackprefs") -- FCPlaybackPrefs crashes Finale in JW Lua due to #define typo in source (fixed for RGP Lua)
 require("classtests/jwluatest_fcrepeatprefs")

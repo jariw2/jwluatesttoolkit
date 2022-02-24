@@ -1,12 +1,19 @@
 function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   finaleplugin.Author = "Jari Williamsson"   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"   return "Create Property Test", "Create Property Test", "Create a test for the properties found for a class."end
 
 -- Show dialog
-local dialog = finenv.UserValueInput()dialog.Title = "Create Property Test"dialog:SetTypes("String", "String")dialog:SetDescriptions("Class name:", "Passed argument name to function:")
+if not finenv.IsRGPLua then
+    local dialog = finenv.UserValueInput()    dialog.Title = "Create Property Test"    dialog:SetTypes("String", "String")    dialog:SetDescriptions("Class name:", "Passed argument name to function:")
 
-local returnvalues = dialog:Execute()if returnvalues == nil then return end
+    local returnvalues = dialog:Execute()    if returnvalues == nil then return end
 
-local ClassNameToFind = returnvalues[1]
-local PassedArgument = returnvalues[2]
+    ClassNameToFind = returnvalues[1]
+    PassedArgument = returnvalues[2]
+else
+    ClassNameToFind = "FCMultiMeasureRest"
+    PassedArgument = "obj"
+    require("mobdebug").start()
+end
+
 local TestOutput = ""
 local TestOutputCount = 0
 
@@ -40,7 +47,14 @@ end
 local processed = false
 TestOutput = "function " .. ClassNameToFind .. "_PropertyTests(" .. PassedArgument .. ")\n"
 for k,v in pairs(_G.finale) do
-    if k == ClassNameToFind and v.__class then        
+    if k == ClassNameToFind then  
+        if not finenv.IsRGPLua then
+            if v.__class then
+                if DumpClassTable(v.__class) then processed = true end
+            end
+        else
+            if DumpClassTable(v) then processed = true end
+        end
         if DumpClassTable(v.__class) then processed = true end       
     end
 end
