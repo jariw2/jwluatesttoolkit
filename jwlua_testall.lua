@@ -4,6 +4,8 @@ if finenv.IsRGPLua then -- if new lua
     require('mobdebug').start()
 end
 
+print("Running on Finale "..((finenv.FinaleVersion > 10000) and (finenv.FinaleVersion - 10000) or finenv.FinaleVersion))
+
 -- Load the toolkit  functions needed for the tests.
 -- Make sure to run jwlua_filetests first, to assure that the file contents is intact.
 require("jwlua_filetests")
