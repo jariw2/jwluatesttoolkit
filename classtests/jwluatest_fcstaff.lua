@@ -6,6 +6,9 @@ function FCStaff_PropertyTests(staff)
         finale.ALTSTAFF_SLASHBEATS, finale.ALTSTAFF_RHYTHMIC,
         finale.ALTSTAFF_ONEBARREPEAT, finale.ALTSTAFF_TWOBARREPEAT,
         finale.ALTSTAFF_BLANKNOTATION } )
+   NumberPropertyTest(staff, "FCStaff", "AutoNumberingStyle", { finale.STAFFAUTONUMBER_ARABIC_SUFFIX,
+        finale.STAFFAUTONUMBER_ROMAN_SUFFIX, finale.STAFFAUTONUMBER_ORDINAL_PREFIX,
+        finale.STAFFAUTONUMBER_ALPHA_SUFFIX } )
    NumberPropertyTest(staff, "FCStaff", "BottomBarlineOffset", { -299, 0, 299 } )
    BoolPropertyTest(staff, "FCStaff", "BreakBarlines")
    BoolPropertyTest(staff, "FCStaff", "BreakRepeatBarlines")
