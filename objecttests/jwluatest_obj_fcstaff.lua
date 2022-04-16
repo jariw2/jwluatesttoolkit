@@ -52,6 +52,7 @@ function FCStaff_ValueTests_ItemNo1(staff)
    NumberValuePropertyTest(staff, "FCStaff", "TransposeInterval", 0)
    BoolValuePropertyTest(staff, "FCStaff", "TransposeSimplifyKey", true)
    BoolValuePropertyTest(staff, "FCStaff", "TransposeUseClef", false)
+   BoolValuePropertyTest(staff, "FCStaff", "UseAutoNumberingStyle", true)
    NumberValuePropertyTest(staff, "FCStaff", "VerticalFretOffset", -1024)
 end
 
