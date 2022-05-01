@@ -79,6 +79,7 @@ end
 
 -- Tests that the value is non-nil
 function AssureNonNil(value, testtext)
+    testtext = testtext or "AssureNonNil"
     TestIncrease()
     if value ~= nil then return true end
     TestError(testtext .. " (Value is nil.)")

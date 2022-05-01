@@ -59,6 +59,7 @@ require("objecttests/jwluatest_obj_fcstemconnectiontable")
 require("objecttests/jwluatest_obj_fctextexpressiondef")
 require("objecttests/jwluatest_obj_fctextrepeat")
 require("objecttests/jwluatest_obj_fctextrepeatdef")
+require("objecttests/jwluatest_obj_fctiemod")
 require("objecttests/jwluatest_obj_fctieprefs")
 
 -- Output the results from the tests:
