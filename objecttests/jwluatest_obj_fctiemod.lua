@@ -1,8 +1,9 @@
 function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod)
-   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", 8, -8)
-   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", 64, -12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "EndHorizontalPos", 0, 12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "EndVerticalPos", 64, 12)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", 8, -8)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", 64, -12)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "TieDirection", finale.TIEMODDIR_OVER)
 end
 
 -- Call:
@@ -18,10 +19,11 @@ if AssureNonNil(entry) and tie_mod then
 end
 
 function FCTieMod_ValueTests_Entry22_2_261_0(tie_mod)
-   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", -8, 8)
-   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", -43, -12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "EndHorizontalPos", -8, 12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "EndVerticalPos", -43, -12)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", -8, 8)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", -43, -12)
+   NumberValuePropertyTest(tie_mod, "FCTieMod", "TieDirection", finale.TIEMODDIR_AUTOMATIC)
 end
 
 -- Call:

@@ -1,8 +1,9 @@
 function FCTieMod_PropertyTests(tie_mod)
-   NumberPropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", {6, 0, -8})
-   NumberPropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", {30, 0, -12})
    NumberPropertyTest(tie_mod, "FCTieMod", "EndHorizontalPos", {-6, 0, 12})
    NumberPropertyTest(tie_mod, "FCTieMod", "EndVerticalPos", {48, 0, -12})
+   NumberPropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", {6, 0, -8})
+   NumberPropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", {30, 0, -12})
+   NumberPropertyTest(tie_mod, "FCTieMod", "TieDirection", {finale.TIEMODDIR_AUTOMATIC, finale.TIEMODDIR_OVER, finale.TIEMODDIR_UNDER})
 end
 
 -- Call:
