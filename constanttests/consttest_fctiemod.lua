@@ -17,6 +17,16 @@ end
 TestConstants_TIEMODDIR_()
 
 
+function TestConstants_TIEMODSEL_()
+   NumberConstantTest(finale.TIEMODSEL_DEFAULT, "TIEMODSEL_DEFAULT", 0)
+   NumberConstantTest(finale.TIEMODSEL_ON, "TIEMODSEL_ON", 1)
+   NumberConstantTest(finale.TIEMODSEL_OFF, "TIEMODSEL_OFF", 2)
+end
+
+-- Test the constants:
+TestConstants_TIEMODDIR_()
+
+
 function TestConstants_TIEMODCNCT_()
    NumberConstantTest(finale.TIEMODCNCT_NONE, "TIEMODCNCT_NONE", 0)
    NumberConstantTest(finale.TIEMODCNCT_ENTRYLEFT_NOTECENTER, "TIEMODCNCT_ENTRYLEFT_NOTECENTER", 1)
