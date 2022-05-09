@@ -1,3 +1,12 @@
+function TestConstants_TIEMODTYPE_()
+   NumberConstantTest(finale.TIEMODTYPE_TIEEND, "TIEMODTYPE_TIEEND", 0)
+   NumberConstantTest(finale.TIEMODTYPE_TIESTART, "TIEMODTYPE_TIESTART", 1)
+end
+
+-- Test the constants:
+TestConstants_TIEMODTYPE_()
+
+
 function TestConstants_TIEMODDIR_()
    NumberConstantTest(finale.TIEMODDIR_AUTOMATIC, "TIEMODDIR_AUTOMATIC", 0)
    NumberConstantTest(finale.TIEMODDIR_OVER, "TIEMODDIR_OVER", 1)

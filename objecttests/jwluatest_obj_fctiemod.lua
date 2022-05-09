@@ -16,7 +16,7 @@ function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod)
 end
 
 -- Call:
-local tie_mod = finale.FCTieMod(true)
+local tie_mod = finale.FCTieMod(finale.TIEMODTYPE_TIESTART)
 AssureNonNil(tie_mod)
 local entry = LoadMeasureEntry(22, 2, 260)
 if AssureNonNil(entry) and tie_mod then
@@ -45,7 +45,7 @@ function FCTieMod_ValueTests_Entry22_2_261_0(tie_mod)
 end
 
 -- Call:
-local tie_mod = finale.FCTieMod(false)
+local tie_mod = finale.FCTieMod(finale.TIEMODTYPE_TIEEND)
 AssureNonNil(tie_mod)
 local entry = LoadMeasureEntry(23, 2, 261)
 if AssureNonNil(entry) and tie_mod then
