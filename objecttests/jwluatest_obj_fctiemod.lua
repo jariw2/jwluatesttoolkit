@@ -1,4 +1,4 @@
-function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod)
+function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod, note)
    BoolValuePropertyTest(tie_mod, "FCTieMod", "AvoidStaffLines", true)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "BreakForKeySignature", finale.TIEMODSEL_DEFAULT)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "BreakForTimeSignature", finale.TIEMODSEL_DEFAULT)
@@ -13,6 +13,10 @@ function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", 8, -8)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", 64, -12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "TieDirection", finale.TIEMODDIR_OVER)
+   if note.NoteID == 3 then
+      NumberValuePropertyTest_RO(tie_mod, "FCTieMod", "StartConnectionCode", finale.TIEMODCNCT_NOTERIGHT_NOTETOP)
+      NumberValuePropertyTest_RO(tie_mod, "FCTieMod", "EndConnectionCode", finale.TIEMODCNCT_SYSTEMEND)
+   end
 end
 
 -- Call:
@@ -24,10 +28,10 @@ if AssureNonNil(entry) and tie_mod then
     local note = entry:GetItemAt(2)
     AssureNonNil(note)
     AssureTrue(tie_mod:LoadAt(note), "Entry260_LoadAt(note)")    
-    FCTieMod_ValueTests_Entry22_2_260_2(tie_mod)
+    FCTieMod_ValueTests_Entry22_2_260_2(tie_mod, note)
 end
 
-function FCTieMod_ValueTests_Entry22_2_261_0(tie_mod)
+function FCTieMod_ValueTests_Entry22_2_261_0(tie_mod, note)
    BoolValuePropertyTest(tie_mod, "FCTieMod", "AvoidStaffLines", false)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "BreakForKeySignature", finale.TIEMODSEL_DEFAULT)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "BreakForTimeSignature", finale.TIEMODSEL_DEFAULT)
@@ -42,6 +46,10 @@ function FCTieMod_ValueTests_Entry22_2_261_0(tie_mod)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", -8, 8)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", -43, -12)
    NumberValuePropertyTest(tie_mod, "FCTieMod", "TieDirection", finale.TIEMODDIR_AUTOMATIC)
+   if note.NoteID == 1 then
+      NumberValuePropertyTest_RO(tie_mod, "FCTieMod", "StartConnectionCode", finale.TIEMODCNCT_SYSTEMSTART)
+      NumberValuePropertyTest_RO(tie_mod, "FCTieMod", "EndConnectionCode", finale.TIEMODCNCT_NOTECENTER_NOTEBOTTOM)
+   end
 end
 
 -- Call:
@@ -53,7 +61,7 @@ if AssureNonNil(entry) and tie_mod then
     local note = entry:GetItemAt(0)
     AssureNonNil(note)
     AssureTrue(tie_mod:LoadAt(note), "Entry261_LoadAt(note)")    
-    FCTieMod_ValueTests_Entry22_2_261_0(tie_mod)
+    FCTieMod_ValueTests_Entry22_2_261_0(tie_mod, note)
 end
 
 
