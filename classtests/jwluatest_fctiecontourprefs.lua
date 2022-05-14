@@ -2,9 +2,11 @@ function FCTieContourPrefs_PropertyTests(prefs, index, savefunction, reloadfunct
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftFixedInset", "SetLeftFixedInset", index, {-144, 0, 144}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftHeight", "SetLeftHeight", index, {-144, 0, 144}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftRelativeInset", "SetLeftRelativeInset", index, {0.0, 6.0, 12.0}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetLeftRawRelativeInset", "SetLeftRawRelativeInset", index, {0, 123, 266}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightFixedInset", "SetRightFixedInset", index, {-144, 0, 144}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightHeight", "SetRightHeight", index, {-144, 0, 144}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightRelativeInset", "SetRightRelativeInset", index, {0.0, 6.0, 12.0}, savefunction, reloadfunction)
+   prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetRightRawRelativeInset", "SetRightRawRelativeInset", index, {0.0, 123, 266}, savefunction, reloadfunction)
    prefs = NumberIndexedFunctionPairsTest(prefs, "FCTieContourPrefs", "GetSpan", "SetSpan", index, {-144, 0, 144}, savefunction, reloadfunction)
    return prefs
 end
