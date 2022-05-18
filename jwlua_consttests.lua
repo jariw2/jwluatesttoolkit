@@ -35,6 +35,7 @@ require("constanttests/consttest_fctextrepeatdef")
 require("constanttests/consttest_fctiecontourprefs")
 require("constanttests/consttest_fctieplacementprefs")
 require("constanttests/consttest_fctieprefs")
+require("constanttests/consttest_fctiemod")
 require("constanttests/consttest_fctuplet")
 
 -- Output the results from the tests:
