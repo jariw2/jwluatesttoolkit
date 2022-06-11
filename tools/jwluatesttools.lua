@@ -311,7 +311,13 @@ function NumberIndexedFunctionPairsTest(obj, classname, gettername, settername, 
         end
     end    
     FunctionTest(obj, classname, gettername)
+    if not obj[gettername] then
+        return obj
+    end
     FunctionTest(obj, classname, settername)
+    if savefunction and not obj[settername] then
+        return obj
+    end
     -- Test to set each number in the number table
     if numbertable == nil then
         TestIncrease()

@@ -18,6 +18,9 @@ function FCTieMod_PropertyTests(tie_mod)
 end
 
 -- Call:
+AssureNonNil(finale.FCTieMod, "FCTieMod")
+if not finale.FCTieMod then return end
+
 local FCTieMod_ProcessEntry = function(entry)
     if AssureNonNil(entry) then
         for _, tie_mods in pairs({finale.FCStartTieMods(entry), finale.FCEndTieMods(entry)}) do

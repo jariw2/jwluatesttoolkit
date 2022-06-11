@@ -20,5 +20,8 @@ AssureTrue(prefs:Load(1))
 FCLayerPrefs_PropertyTests(prefs)
 
 StaticFunctionTest("FCLayerPrefs", "GetMaxLayers")
-local max_layers = finale.FCLayerPrefs.GetMaxLayers()
-AssureTrue(max_layers == 4, "FCLayerPrefs.GetMaxLayers() == 4.")
+AssureNonNil(finale.FCLayerPrefs.GetMaxLayers, "FCLayerPrefs.GetMaxLayers")
+if finale.FCLayerPrefs.GetMaxLayers then
+    local max_layers = finale.FCLayerPrefs.GetMaxLayers()
+    AssureTrue(max_layers == 4, "FCLayerPrefs.GetMaxLayers() == 4.")
+end

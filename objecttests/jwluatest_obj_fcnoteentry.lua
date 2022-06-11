@@ -48,6 +48,9 @@ FCNoteEntry_ValueTests_Cell5_3(entry)
 
 -- Scenarios:
 function FCNoteEntry_Scenario_FindNote_Test(entry1, entry2)
+    AssureNonNil(entry1, "FCNoteEntry_Scenario_FindNote_Test entry1")
+    AssureNonNil(entry2, "FCNoteEntry_Scenario_FindNote_Test entry2")
+    if not entry1 or not entry2 then return end
     local note_string = function(note)
         if not note then return nil end
         return tostring(note.Entry.EntryNumber).."."..tostring(note.NoteID)
@@ -56,7 +59,7 @@ function FCNoteEntry_Scenario_FindNote_Test(entry1, entry2)
         local note2 = entry2:FindPitch(note1)
         AssureNonNil(note2, "FCNoteEntry:FindPitch is nil for note: "..note_string(note1))
         if note2 then
-            AssureTrue(note2.NoteIndex == note1.NoteIndex, "FCNoteEntry:FindPitch wrong note returned for note: "..note_string(note1).." (got note: "..note_string(note2)..")")
+            AssureTrue(note2.NoteID == note1.NoteID, "FCNoteEntry:FindPitch wrong note returned for note: "..note_string(note1).." (got note: "..note_string(note2)..")")
         end
     end
 end
