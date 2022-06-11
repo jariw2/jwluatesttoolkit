@@ -415,8 +415,10 @@ function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction
     local loaded_in_part = obj[loadfunction](obj, loadargument)
     obj[propertyname] = score_value + increment
     AssureTrue(loaded_in_part and obj:Save() or obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
+    AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
+    AssureTrue(obj[propertyname] == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value not retained in part after reload. ("..classname..")")
     part:SwitchBack()
-    AssureTrue(loaded_in_part and obj:Reload() or obj[loadfunction](obj, loadargument), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
+    AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
     AssureTrue(obj[propertyname] == score_value, classname.."."..propertyname.." is unlinkable.")
     if not loaded_in_score then
         obj:DeleteData()
