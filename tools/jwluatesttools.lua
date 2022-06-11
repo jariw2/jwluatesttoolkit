@@ -567,6 +567,12 @@ function StringConstantTest(constobj, constname, expectedvalue)
 end
 
 
+function LoadMeasureEntryLocal(measureno, staffno, entryid)
+    local notecell = finale.FCNoteEntryCell(measureno, staffno)
+    AssureTrue(notecell:Load(), "LME_notecell:Load() in LoadMeasureEntryLocal")
+    return notecell:FindEntryNumber(entryid), notecell
+end
+        
 -- Tries to find a specific note entry in the file. At each call, it clears the old loaded frames.
 function LoadMeasureEntry(measureno, staffno, entryid)
     if LME_notecell then LME_notecell:ClearFrame() end
