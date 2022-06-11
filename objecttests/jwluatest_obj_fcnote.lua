@@ -52,3 +52,12 @@ for note in each(entry) do
     end
 end
 AssureTrue(got1 and got2, "FCNotes at (5, 3, 0) not found.")
+
+entry = LoadMeasureEntry(59, 3, 268)
+AssureTrue(entry ~= nil, "LoadMeasureEntry(LoadMeasureEntry(59, 3, 268) for FCNote")
+for note in each(entry) do
+    local raise_lower = note:CalcPitchRaiseLower(true)
+    AssureTrue(raise_lower == 1, "1st FCNote at (59, 3, 268) returned raise_lower of "..tostring(raise_lower)..". (Expected 1.)")
+    break
+end
+
