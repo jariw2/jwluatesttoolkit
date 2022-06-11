@@ -21,7 +21,10 @@ end
 -- Call:
 local part = finale.FCPart(1) -- should be Voiced Part Staff 2
 AssureTrue(part:SwitchTo(), "FCPartStaffVoicing was not able to bring part 1 into edit focus for class test.")
-local obj = finale.FCPartStaffVoicing()
-AssureTrue(obj:Load(3), "FCPartStaffVoicing:Load(3)")
-FCPartStaffVoicing_PropertyTests(obj)
+AssureNonNil(finale.FCPartStaffVoicing, "FCPartStaffVoicing class test")
+if finale.FCPartStaffVoicing then
+    local obj = finale.FCPartStaffVoicing()
+    AssureTrue(obj:Load(3), "FCPartStaffVoicing:Load(3)")
+    FCPartStaffVoicing_PropertyTests(obj)
+end
 AssureTrue(part:SwitchBack(), "FCPartStaffVoicing was not able to switch edit focus back to Score.")

@@ -20,6 +20,8 @@ function FCTieMod_ValueTests_Entry22_2_260_2(tie_mod, note)
 end
 
 -- Call:
+AssureNonNil(finale.FCTieMod, "FCTieMod")
+if not finale.FCTieMod then return end
 local tie_mod = finale.FCTieMod(finale.TIEMODTYPE_TIESTART)
 AssureNonNil(tie_mod)
 local entry = LoadMeasureEntry(22, 2, 260)

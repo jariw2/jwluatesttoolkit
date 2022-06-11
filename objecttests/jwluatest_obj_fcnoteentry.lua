@@ -44,3 +44,29 @@ end
 local entry = LoadMeasureEntry(5, 3, 135)
 AssureTrue(entry ~= nil, "LoadMeasureEntry(LoadMeasureEntry(5, 3, 135) for FCNoteEntry")
 FCNoteEntry_ValueTests_Cell5_3(entry)
+
+
+-- Scenarios:
+function FCNoteEntry_Scenario_FindNote_Test(entry1, entry2)
+    AssureNonNil(entry1, "FCNoteEntry_Scenario_FindNote_Test entry1")
+    AssureNonNil(entry2, "FCNoteEntry_Scenario_FindNote_Test entry2")
+    if not entry1 or not entry2 then return end
+    local note_string = function(note)
+        if not note then return nil end
+        return tostring(note.Entry.EntryNumber).."."..tostring(note.NoteID)
+    end
+    for note1 in each(entry1) do
+        local note2 = entry2:FindPitch(note1)
+        AssureNonNil(note2, "FCNoteEntry:FindPitch is nil for note: "..note_string(note1))
+        if note2 then
+            AssureTrue(note2.NoteID == note1.NoteID, "FCNoteEntry:FindPitch wrong note returned for note: "..note_string(note1).." (got note: "..note_string(note2)..")")
+        end
+    end
+end
+
+local entry1, notecell1 = LoadMeasureEntryLocal(27, 1, 264)
+local entry2, notecell2 = LoadMeasureEntryLocal(28, 1, 265)
+local entry3, notecell3 = LoadMeasureEntryLocal(28, 1, 266)
+FCNoteEntry_Scenario_FindNote_Test(entry1, entry2)
+FCNoteEntry_Scenario_FindNote_Test(entry2, entry3)
+
