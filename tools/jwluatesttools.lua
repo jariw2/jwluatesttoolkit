@@ -389,6 +389,42 @@ function BoolIndexedFunctionPairsTest(obj, classname, gettername, settername, in
     return obj
 end
 
+-- Test for unlinkable property; assumes score in view to begin with
+function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction, loadargument, increment, partnumber, skipfinaleversion)
+    skipfinaleversion = skipfinaleversion or 0 -- skipfinaleversion is optional
+    if finenv.RawFinaleVersion <= skipfinaleversion then return end
+    if not AssureNonNil(obj, "nil passed to UnlinkableNumberPropertyTest for " .. classname .. "." .. propertyname .. " partnumber " .. partnumber) then return end
+    PropertyTest(obj, classname, propertyname)
+    if not obj[propertyname] then
+        return
+    end
+    if not AssureTrue(increment ~= 0, "UnlinkableNumberPropertyTest Internal error: zero passed for increment. ("..classname..")") then return end
+    if not AssureTrue(partnumber ~= finale.PARTID_SCORE, "UnlinkableNumberPropertyTest Internal error: score passed instead of part. ("..classname..")") then return end
+    local part = finale.FCPart(partnumber)
+    if not AssureTrue(part:Load(partnumber), "UnlinkableNumberPropertyTest Internal error: load partnumber. ("..classname..")") then return end
+    
+    if not AssureNonNil(obj[loadfunction], classname.."."..loadfunction.." does not exist.") then return end
+    if not AssureNonNil(obj.Reload, classname..".".."Reload".." does not exist.") then return end
+    if not AssureNonNil(obj.Save, classname..".".."Save".." does not exist.") then return end
+    if not AssureNonNil(obj.SaveNew, classname..".".."SaveNew".." does not exist.") then return end
+    if not AssureNonNil(obj.DeleteData, classname..".".."DeleteData".." does not exist.") then return end
+    
+    local loaded_in_score = obj[loadfunction](obj, loadargument)
+    local score_value = obj[propertyname]
+    part:SwitchTo()
+    local loaded_in_part = obj[loadfunction](obj, loadargument)
+    obj[propertyname] = score_value + increment
+    AssureTrue(loaded_in_part and obj:Save() or obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
+    part:SwitchBack()
+    AssureTrue(loaded_in_part and obj:Reload() or obj[loadfunction](obj, loadargument), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
+    AssureTrue(obj[propertyname] == score_value, classname.."."..propertyname.." is unlinkable.")
+    if not loaded_in_score then
+        obj:DeleteData()
+    else
+        obj[propertyname] = score_value
+        obj:Save()
+    end
+end
 
 -- Test for number properties read-only)
 function NumberPropertyTest_RO(obj, classname, propertyname, numbertable)

@@ -11,5 +11,6 @@ print("Running on Finale "..((finenv.FinaleVersion > 10000) and (finenv.FinaleVe
 require("jwlua_filetests")
 require("jwlua_consttests")
 require("jwlua_classtests")
+require("jwlua_unlinktests")
 
 -- No need to output the result, since that's already been done
