@@ -247,6 +247,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = false
+    AssureTrue(obj[propertyname] == false, classname .. "." .. propertyname .. " is false.")
     AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= true then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to true." )
@@ -255,6 +256,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = true
+    AssureTrue(obj[propertyname] == true, classname .. "." .. propertyname .. " is true.")
     AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= false then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to false." )

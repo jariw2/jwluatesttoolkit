@@ -56,18 +56,26 @@ Note that with the current version of `jwluatesttools`, JW Lua generates several
 
 ### Script Files
 
-`jwlua_classtests.lua`<br>Contains the tasks to run the available unit tests. Run that file to run the test and get a report.
+The following scripts each provide a report as described.
 
-`jwlua_consttests.lua`<br>Contains the tasks to run the tests for JW Lua constants. Run that file to run the test and get a report.
-
-`jwlua_filetests.lua`<br>Contains the tasks to run the tests on the Finale test document. Run that file to run the test and get a report.
-
-`jwlua_unlinktests.lua`<br>Contains the tasks to check whether properties unlink. Run that file to run the test and get a report.
-
-`jwlua_testall.lua`<br>Runs all tests above.
+|Test Script|Description|
+| --- | --- |
+|`jwlua_classtests.lua`|Contains the tasks to run the available class-level unit tests.|
+|`jwlua_consttests.lua`|Contains the tasks to run the tests for JW Lua constants. |
+|`jwlua_filetests.lua`|Contains the tasks to run the tests on the Finale test document.|
+|`jwlua_unlinktests.lua`|Contains the tasks to check whether properties unlink.|
+|`jwlua_testall.lua`|Runs all tests at once.|
 
 ===
 
 ## To Create a New Test
 
-The script `create_property_test.lua` contains the code to create a "skeleton" test code for a PDK Framework Lua class. The skeleton code is put in the clipboard, where it can be pasted to another document.
+
+The following scripts in the `creation_tools` directory create “skeleton” code for a PDK Framework Lua class as described. The skeleton code is put on the clipboard where it can be pasted to another document. Except as noted, these scripts can run on either JW Lua or RGP Lua. For example, `create_object_reflection.lua` was run in JW Lua to create the Lua framework code for RGP Lua. (But now RGP Lua returns more complete results.)
+
+|Test Script|Description|
+| --- | --- |
+|`create_constants_test.lua`|Creates a test script for constants, filtering on an input string. (Only works with JW Lua.)|
+|`create_object_reflection.lua`|Creates C++ macros for every method and property of the input classname. These can be used with [`refl-cpp`](https://github.com/veselink1/refl-cpp) (a compile-time reflection library for C++17.)|
+|`create_object_test.lua`|Creates a test script for the class to be included in the file tests. Edit this script as needed to run for the desired classname.|
+|`create_property_test.lua`|Creates a test for the class to be included in the class tests. Edit this script as needed to run for the desired classname.|

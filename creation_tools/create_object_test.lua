@@ -147,7 +147,7 @@ end
 ]]
 
 
-local p = finale.FCMultiMeasureRest()
-p:Load(39)
+local p = finale.FCPageText()
+p:Load(1, 0)
 ProcessObject(p, "obj")
 

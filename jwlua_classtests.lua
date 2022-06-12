@@ -41,6 +41,7 @@ require("classtests/jwluatest_fcnumber")
 require("classtests/jwluatest_fcpage")
 require("classtests/jwluatest_fcpageformatprefs")
 require("classtests/jwluatest_fcpagegraphic")
+require("classtests/jwluatest_fcpagetext")
 --require("classtests/jwluatest_fcpartextractprefs") -- not actually accessible from Lua
 require("classtests/jwluatest_fcpartscopeprefs")
 require("classtests/jwluatest_fcpartstaffvoicing")
