@@ -17,6 +17,8 @@ require("unlinktests/jwluatest_unlink_fccelltext")
 require("unlinktests/jwluatest_unlink_fcdotmod")
 require("unlinktests/jwluatest_unlink_fcexpression")
 require("unlinktests/jwluatest_unlink_fcnoteentry")
+require("unlinktests/jwluatest_unlink_fcpagegraphic")
+require("unlinktests/jwluatest_unlink_fcpagetext")
 require("unlinktests/jwluatest_unlink_fctiemod")
 
 -- Output the results from the tests:
