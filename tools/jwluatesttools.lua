@@ -624,3 +624,16 @@ function LoadMeasureEntry(measureno, staffno, entryid)
     AssureTrue(LME_notecell:Load(), "LME_notecell:Load() in LoadMeasureEntry")
     return LME_notecell:FindEntryNumber(entryid)    
 end
+
+function CheckForOfficialTestTemplate()
+    local fileinfotext = finale.FCFileInfoText()
+    fileinfotext:LoadDescription()
+    local str = fileinfotext:CreateString()
+    str:TrimEnigmaTags()
+    str:TrimWhitespace()
+    if str.LuaString ~= "This is the official JW Lua test template." then
+        print ("Wrong file is used for the test. Please load the official Lua test file (testtemplate/testtemplate-fin2011format.musx).")
+        return false
+    end
+    return true
+end

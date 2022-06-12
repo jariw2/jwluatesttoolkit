@@ -5,6 +5,10 @@ function plugindef()
    return "Finale Lua Constants Tests", "Constants Tests", "Test the validity of the Finale Lua constants."
 end
 
+if finenv.IsRGPLua then -- if new lua
+    require('mobdebug').start()
+end
+
 -- Load the toolkit  functions needed for the tests:
 require("tools/jwluatesttools")
 

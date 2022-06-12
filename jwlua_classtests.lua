@@ -5,8 +5,15 @@ function plugindef()
    return "Finale Lua Class Tests", "Class Tests", "Test the validity of Finale Lua classes"
 end
 
+if finenv.IsRGPLua then -- if new lua
+    require('mobdebug').start()
+end
+
 -- Load the toolkit  functions needed for the tests:
 require("tools/jwluatesttools")
+
+-- Validate the current file prior to the test:
+if not CheckForOfficialTestTemplate() then return end
 
 -- Load and execute the unit tests for the classes:
 require("classtests/jwluatest_fcarticulationdef")
