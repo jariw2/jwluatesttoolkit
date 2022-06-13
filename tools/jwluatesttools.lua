@@ -406,17 +406,20 @@ function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction
     if not AssureTrue(part:Load(partnumber), "UnlinkableNumberPropertyTest Internal error: load partnumber. ("..classname..")") then return end
     
     if not AssureNonNil(obj[loadfunction], classname.."."..loadfunction.." does not exist.") then return end
+    local loaded_in_score = obj[loadfunction](obj, loadargument)
+    
     if not AssureNonNil(obj.Reload, classname..".".."Reload".." does not exist.") then return end
     if not AssureNonNil(obj.Save, classname..".".."Save".." does not exist.") then return end
-    if not AssureNonNil(obj.SaveNew, classname..".".."SaveNew".." does not exist.") then return end
-    if not AssureNonNil(obj.DeleteData, classname..".".."DeleteData".." does not exist.") then return end
+    if not loaded_in_score then
+        if not AssureNonNil(obj.SaveNew, classname..".".."SaveNew".." does not exist.") then return end
+        if not AssureNonNil(obj.DeleteData, classname..".".."DeleteData".." does not exist.") then return end
+    end
     
-    local loaded_in_score = obj[loadfunction](obj, loadargument)
     local score_value = obj[propertyname]
     part:SwitchTo()
     local loaded_in_part = obj[loadfunction](obj, loadargument)
     obj[propertyname] = score_value + increment
-    AssureTrue(loaded_in_part and obj:Save() or obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
+    AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
     AssureTrue(obj[propertyname] == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value not retained in part after reload. ("..classname..")")
     part:SwitchBack()
