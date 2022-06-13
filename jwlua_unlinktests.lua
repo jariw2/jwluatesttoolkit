@@ -22,6 +22,7 @@ _G.staff_to_part = {3, 2, 1} -- The Part numbers are in reverse staff order
 require("unlinktests/jwluatest_unlink_fcarticulation")
 require("unlinktests/jwluatest_unlink_fcbaseline")
 require("unlinktests/jwluatest_unlink_fcbeammod")
+require("unlinktests/jwluatest_unlink_fccellclefchange")
 require("unlinktests/jwluatest_unlink_fccelltext")
 require("unlinktests/jwluatest_unlink_fcdotmod")
 require("unlinktests/jwluatest_unlink_fcexpression")
