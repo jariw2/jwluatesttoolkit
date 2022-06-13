@@ -405,8 +405,17 @@ function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction
     local part = finale.FCPart(partnumber)
     if not AssureTrue(part:Load(partnumber), "UnlinkableNumberPropertyTest Internal error: load partnumber. ("..classname..")") then return end
     
-    if not AssureNonNil(obj[loadfunction], classname.."."..loadfunction.." does not exist.") then return end
-    local loaded_in_score = obj[loadfunction](obj, loadargument)
+    local loadfunction_is_function = type(loadfunction) == "function"
+    local obj_load = function()
+        if loadfunction_is_function then
+            return loadfunction()
+        end
+        return obj[loadfunction](obj, loadargument)
+    end
+    if not loadfunction_is_function then
+        if not AssureNonNil(obj[loadfunction], classname.."."..loadfunction.." does not exist.") then return end
+    end
+    local loaded_in_score = obj_load()
     
     if not AssureNonNil(obj.Reload, classname..".".."Reload".." does not exist.") then return end
     if not AssureNonNil(obj.Save, classname..".".."Save".." does not exist.") then return end
@@ -417,7 +426,7 @@ function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction
     
     local score_value = obj[propertyname]
     part:SwitchTo()
-    local loaded_in_part = obj[loadfunction](obj, loadargument)
+    local loaded_in_part = obj_load()
     obj[propertyname] = score_value + increment
     AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")

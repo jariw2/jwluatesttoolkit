@@ -9,4 +9,4 @@ function FCCellText_Test_Unlinkable(measure, staff, partnumber)
 end
 
 -- Call:
-FCCellText_Test_Unlinkable(12, 1, 3)
+FCCellText_Test_Unlinkable(12, 1, staff_to_part[1])
