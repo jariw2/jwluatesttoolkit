@@ -33,6 +33,7 @@ require("unlinktests/jwluatest_unlink_fcpagegraphic")
 require("unlinktests/jwluatest_unlink_fcpagetext")
 require("unlinktests/jwluatest_unlink_fcseparatemeasurenumber")
 require("unlinktests/jwluatest_unlink_fcseparateplacement")
+require("unlinktests/jwluatest_unlink_fcstemmod")
 require("unlinktests/jwluatest_unlink_fctextrepeat")
 require("unlinktests/jwluatest_unlink_fctiemod")
 
