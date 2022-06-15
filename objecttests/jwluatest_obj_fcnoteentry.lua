@@ -2,6 +2,7 @@ function FCNoteEntry_ValueTests_Cell5_3(entry)
    NumberValuePropertyTest(entry, "FCNoteEntry", "ActualDuration", 1024)
    BoolValuePropertyTest(entry, "FCNoteEntry", "ArticulationFlag", false)
    BoolValuePropertyTest(entry, "FCNoteEntry", "BeamBeat", true)
+   BoolValuePropertyTest(entry, "FCNoteEntry", "BeamExtensionFlag", false)
    BoolValuePropertyTest(entry, "FCNoteEntry", "CheckAccidentals", false, true) -- true: read-only
    NumberValuePropertyTest(entry, "FCNoteEntry", "ClefIndex", 3)
    BoolValuePropertyTest(entry, "FCNoteEntry", "CombineRests", true)
