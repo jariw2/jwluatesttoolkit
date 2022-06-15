@@ -4,7 +4,10 @@ function FCBeamMod_Test_Unlinkable(measure, staff, entrynumber, partnumber)
     if AssureNonNil(entry, "LoadMeasureEntry("..measure..", "..staff..", "..entrynumber..")") then
         local beammod = finale.FCBeamMod()
         beammod:SetNoteEntry(entry)
-        UnlinkableNumberPropertyTest(beammod, "FCBeamMod", "LeftVerticalOffset", "LoadFirst", nil, -24, partnumber) 
+        UnlinkableNumberPropertyTest(beammod, "FCBeamMod", "LeftHorizontalOffset", "LoadFirst", nil, -24, partnumber)
+        UnlinkableNumberPropertyTest(beammod, "FCBeamMod", "LeftVerticalOffset", "LoadFirst", nil, 24, partnumber)
+        UnlinkableNumberPropertyTest(beammod, "FCBeamMod", "RightHorizontalOffset", "LoadFirst", nil, 24, partnumber)
+        UnlinkableNumberPropertyTest(beammod, "FCBeamMod", "RightVerticalOffset", "LoadFirst", nil, -24, partnumber)
     end
 end
 
