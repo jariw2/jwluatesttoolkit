@@ -392,13 +392,17 @@ function BoolIndexedFunctionPairsTest(obj, classname, gettername, settername, in
 end
 
 -- Test for unlinkable property; assumes score in view to begin with
-function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction, loadargument, increment, partnumber, skipfinaleversion)
+-- The updater parameter is either a function that is passed the increment or nil or a writable property name.
+-- The load function is either a function or the name of a load method.
+function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loadargument, increment, partnumber, skipfinaleversion)
     skipfinaleversion = skipfinaleversion or 0 -- skipfinaleversion is optional
     if finenv.RawFinaleVersion <= skipfinaleversion then return end
-    if not AssureNonNil(obj, "nil passed to UnlinkableNumberPropertyTest for " .. classname .. "." .. propertyname .. " partnumber " .. partnumber) then return end
-    PropertyTest(obj, classname, propertyname)
-    if not obj[propertyname] then
-        return
+    if not AssureNonNil(obj, "nil passed to UnlinkableNumberPropertyTest for " .. classname .. "." .. tostring(updater) .. " partnumber " .. partnumber) then return end
+    
+    local updater_is_function = type(property) == "function"
+    if not updater_is_function then
+        PropertyTest(obj, classname, updater)
+        if not obj[updater] then return end
     end
     if not AssureTrue(increment ~= 0, "UnlinkableNumberPropertyTest Internal error: zero passed for increment. ("..classname..")") then return end
     if not AssureTrue(partnumber ~= finale.PARTID_SCORE, "UnlinkableNumberPropertyTest Internal error: score passed instead of part. ("..classname..")") then return end
@@ -424,20 +428,28 @@ function UnlinkableNumberPropertyTest(obj, classname, propertyname, loadfunction
         if not AssureNonNil(obj.DeleteData, classname..".".."DeleteData".." does not exist.") then return end
     end
     
-    local score_value = obj[propertyname]
+    local obj_updater = function(value)
+        if updater_is_function then return updater(value) end
+        if value then
+            obj[updater] = value
+        end
+        return obj[updater]
+    end
+    
+    local score_value = obj_updater()
     part:SwitchTo()
     local loaded_in_part = obj_load()
-    obj[propertyname] = score_value + increment
+    obj_updater(score_value + increment)
     AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
-    AssureTrue(obj[propertyname] == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value not retained in part after reload. ("..classname..")")
+    AssureTrue(obj[updater] == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value not retained in part after reload. ("..classname..")")
     part:SwitchBack()
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
-    AssureTrue(obj[propertyname] == score_value, classname.."."..propertyname.." is unlinkable.")
+    AssureTrue(obj_updater() == score_value, classname.."."..tostring(updater).." is unlinkable.")
     if not loaded_in_score then
         obj:DeleteData()
     else
-        obj[propertyname] = score_value
+        obj_updater(score_value)
         obj:Save()
     end
 end

@@ -6,6 +6,9 @@ function FCTieMod_Test_Unlinkable(measure, staff, entrynumber, partnumber)
         tie_mod:SetNoteEntry(entry)
         local note = entry:GetItemAt(2)
         AssureNonNil(note)
+        UnlinkableNumberPropertyTest(tie_mod, "FCTieMod", "EndHorizontalPos", "LoadAt", note, -24, partnumber, skip_finale_version)
+        UnlinkableNumberPropertyTest(tie_mod, "FCTieMod", "EndVerticalPos", "LoadAt", note, 24, partnumber, skip_finale_version)
+        UnlinkableNumberPropertyTest(tie_mod, "FCTieMod", "StartHorizontalPos", "LoadAt", note, 24, partnumber, skip_finale_version)
         UnlinkableNumberPropertyTest(tie_mod, "FCTieMod", "StartVerticalPos", "LoadAt", note, -24, partnumber, skip_finale_version)
     end
 end
