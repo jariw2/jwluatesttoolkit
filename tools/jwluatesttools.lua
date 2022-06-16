@@ -442,7 +442,7 @@ function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loa
     obj_updater(score_value + increment)
     AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
-    AssureTrue(obj[updater] == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value not retained in part after reload. ("..classname..")")
+    AssureTrue(obj_updater() == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value for "..tostring(updater).." not retained in part after reload. ("..classname..")")
     part:SwitchBack()
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
     AssureTrue(obj_updater() == score_value, classname.."."..tostring(updater).." is unlinkable.")
