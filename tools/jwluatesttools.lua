@@ -177,10 +177,11 @@ function TestFunctionName(classname, functionname)
         if k == classname and v.__class then
             -- Class name found
             AssureKeyInTable(v, functionname, "", "Function not found for class " .. classname .. ": ")
-            return
+            return true
         end
     end
     TestError("Class name not found: " .. classname)
+    return false
 end
 
 -- Test the availability of the class and that the ClassName() method returns the correct string
@@ -220,7 +221,7 @@ end
 -- Test for class methods
 function FunctionTest(obj, classname, functionname)
     if not TestClassName(obj, classname) then return end
-    TestFunctionName(classname, functionname, true)
+    return TestFunctionName(classname, functionname, true)
 end
 
 -- Test for static function existence
@@ -399,8 +400,9 @@ function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loa
     if finenv.RawFinaleVersion <= skipfinaleversion then return end
     if not AssureNonNil(obj, "nil passed to UnlinkableNumberPropertyTest for " .. classname .. "." .. tostring(updater) .. " partnumber " .. partnumber) then return end
     
-    local updater_is_function = type(property) == "function"
+    local updater_is_function = type(updater) == "function"
     if not updater_is_function then
+        if not AssureTrue(type(updater) == "string", "UnlinkableNumberPropertyTest updater is string. ("..classname..")") then return end
         PropertyTest(obj, classname, updater)
         if not obj[updater] then return end
     end
