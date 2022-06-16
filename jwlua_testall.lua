@@ -4,6 +4,12 @@ if finenv.IsRGPLua then -- if new lua
     require('mobdebug').start()
 end
 
+-- Load the toolkit  functions needed for the tests:
+require("tools/jwluatesttools")
+
+-- Validate the current file prior to the test:
+if not CheckForOfficialTestTemplate() then return end
+
 print("Running on Finale "..((finenv.FinaleVersion > 10000) and (finenv.FinaleVersion - 10000) or finenv.FinaleVersion))
 
 -- Load the toolkit  functions needed for the tests.
@@ -11,5 +17,6 @@ print("Running on Finale "..((finenv.FinaleVersion > 10000) and (finenv.FinaleVe
 require("jwlua_filetests")
 require("jwlua_consttests")
 require("jwlua_classtests")
+require("jwlua_unlinktests")
 
 -- No need to output the result, since that's already been done

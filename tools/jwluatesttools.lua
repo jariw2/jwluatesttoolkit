@@ -177,10 +177,11 @@ function TestFunctionName(classname, functionname)
         if k == classname and v.__class then
             -- Class name found
             AssureKeyInTable(v, functionname, "", "Function not found for class " .. classname .. ": ")
-            return
+            return true
         end
     end
     TestError("Class name not found: " .. classname)
+    return false
 end
 
 -- Test the availability of the class and that the ClassName() method returns the correct string
@@ -220,7 +221,7 @@ end
 -- Test for class methods
 function FunctionTest(obj, classname, functionname)
     if not TestClassName(obj, classname) then return end
-    TestFunctionName(classname, functionname, true)
+    return TestFunctionName(classname, functionname, true)
 end
 
 -- Test for static function existence
@@ -247,6 +248,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = false
+    AssureTrue(obj[propertyname] == false, classname .. "." .. propertyname .. " is false.")
     AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= true then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to true." )
@@ -255,6 +257,7 @@ function BoolPropertyTest(obj, classname, propertyname)
     TestIncrease()
     AssureTrue(obj:Save(), classname .. "::Save()")
     obj[propertyname] = true
+    AssureTrue(obj[propertyname] == true, classname .. "." .. propertyname .. " is true.")
     AssureTrue(obj:Reload(), classname .. "::Reload()")
     if obj[propertyname] ~= false then
          TestError("Bool test error while trying to set/save " .. classname .. "." .. propertyname .. " to false." )
@@ -389,6 +392,69 @@ function BoolIndexedFunctionPairsTest(obj, classname, gettername, settername, in
     return obj
 end
 
+-- Test for unlinkable property; assumes score in view to begin with
+-- The updater parameter is either a function that is passed the increment or nil or a writable property name.
+-- The load function is either a function or the name of a load method.
+function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loadargument, increment, partnumber, skipfinaleversion)
+    skipfinaleversion = skipfinaleversion or 0 -- skipfinaleversion is optional
+    if finenv.RawFinaleVersion <= skipfinaleversion then return end
+    if not AssureNonNil(obj, "nil passed to UnlinkableNumberPropertyTest for " .. classname .. "." .. tostring(updater) .. " partnumber " .. partnumber) then return end
+    
+    local updater_is_function = type(updater) == "function"
+    if not updater_is_function then
+        if not AssureTrue(type(updater) == "string", "UnlinkableNumberPropertyTest updater is string. ("..classname..")") then return end
+        PropertyTest(obj, classname, updater)
+        if not obj[updater] then return end
+    end
+    if not AssureTrue(increment ~= 0, "UnlinkableNumberPropertyTest Internal error: zero passed for increment. ("..classname..")") then return end
+    if not AssureTrue(partnumber ~= finale.PARTID_SCORE, "UnlinkableNumberPropertyTest Internal error: score passed instead of part. ("..classname..")") then return end
+    local part = finale.FCPart(partnumber)
+    if not AssureTrue(part:Load(partnumber), "UnlinkableNumberPropertyTest Internal error: load partnumber. ("..classname..")") then return end
+    
+    local loadfunction_is_function = type(loadfunction) == "function"
+    local obj_load = function()
+        if loadfunction_is_function then
+            return loadfunction()
+        end
+        return obj[loadfunction](obj, loadargument)
+    end
+    if not loadfunction_is_function then
+        if not AssureNonNil(obj[loadfunction], classname.."."..loadfunction.." does not exist.") then return end
+    end
+    local loaded_in_score = obj_load()
+    
+    if not AssureNonNil(obj.Reload, classname..".".."Reload".." does not exist.") then return end
+    if not AssureNonNil(obj.Save, classname..".".."Save".." does not exist.") then return end
+    if not loaded_in_score then
+        if not AssureNonNil(obj.SaveNew, classname..".".."SaveNew".." does not exist.") then return end
+        if not AssureNonNil(obj.DeleteData, classname..".".."DeleteData".." does not exist.") then return end
+    end
+    
+    local obj_updater = function(value)
+        if updater_is_function then return updater(value) end
+        if value then
+            obj[updater] = value
+        end
+        return obj[updater]
+    end
+    
+    local score_value = obj_updater()
+    part:SwitchTo()
+    local loaded_in_part = obj_load()
+    obj_updater(score_value + increment)
+    AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
+    AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
+    AssureTrue(obj_updater() == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value for "..tostring(updater).." not retained in part after reload. ("..classname..")")
+    part:SwitchBack()
+    AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
+    AssureTrue(obj_updater() == score_value, classname.."."..tostring(updater).." is unlinkable.")
+    if not loaded_in_score then
+        obj:DeleteData()
+    else
+        obj_updater(score_value)
+        obj:Save()
+    end
+end
 
 -- Test for number properties read-only)
 function NumberPropertyTest_RO(obj, classname, propertyname, numbertable)
@@ -585,4 +651,17 @@ function LoadMeasureEntry(measureno, staffno, entryid)
     LME_notecell = finale.FCNoteEntryCell(measureno, staffno)
     AssureTrue(LME_notecell:Load(), "LME_notecell:Load() in LoadMeasureEntry")
     return LME_notecell:FindEntryNumber(entryid)    
+end
+
+function CheckForOfficialTestTemplate()
+    local fileinfotext = finale.FCFileInfoText()
+    fileinfotext:LoadDescription()
+    local str = fileinfotext:CreateString()
+    str:TrimEnigmaTags()
+    str:TrimWhitespace()
+    if str.LuaString ~= "This is the official JW Lua test template." then
+        print ("Wrong file is used for the test. Please load the official Lua test file (testtemplate/testtemplate-fin2011format.musx).")
+        return false
+    end
+    return true
 end

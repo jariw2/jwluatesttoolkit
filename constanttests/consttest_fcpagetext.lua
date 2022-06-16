@@ -15,3 +15,13 @@ end
 
 -- Test the constants:
 TestConstants_TEXTVERTALIGN_()
+
+function TestConstants_TEXTASSIGN_()
+   NumberConstantTest(finale.TEXTASSIGN_ALL, "TEXTASSIGN_ALL", 0)
+   NumberConstantTest(finale.TEXTASSIGN_ODD, "TEXTASSIGN_ODD ", 1)
+   NumberConstantTest(finale.TEXTASSIGN_EVEN, "TEXTASSIGN_EVEN ", 2)
+end
+
+-- Test the constants:
+TestConstants_TEXTVERTALIGN_()
+

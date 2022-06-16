@@ -8,7 +8,7 @@ function plugindef()
    return "Create Object Reflection", "Create Object Reflection", "Reflect selected class(es) to the clipboard in refl-cpp format."
 end
 
-if finenv.MinorVersion > 54 then -- if new lua
+if finenv.IsRGPLua then -- if new lua
     require('mobdebug').start()
 end
 

@@ -38,7 +38,7 @@ end
 
 -- Call:
 local entry = LoadMeasureEntry(5, 3, 135)
-AssureTrue(entry ~= nil, "LoadMeasureEntry(LoadMeasureEntry(5, 3, 135) for FCNote")
+if not AssureNonNil(entry, "LoadMeasureEntry(LoadMeasureEntry(5, 3, 135) for FCNote") then return end
 local got1 = false
 local got2 = false
 for note in each(entry) do

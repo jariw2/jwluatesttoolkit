@@ -5,20 +5,15 @@ function plugindef()
    return "Finale Lua File Tests", "File Tests", "Test the validity of Finale Lua classes against a specific debug file."
 end
 
--- Validate the current file prior to the test:
-local fileinfotext = finale.FCFileInfoText()
-fileinfotext:LoadDescription()
-local str = fileinfotext:CreateString()
-str:TrimEnigmaTags()
-str:TrimWhitespace()
-if str.LuaString ~= "This is the official JW Lua test template." then
-    print ("Wrong file is used for the test. Please load the official JW Lua test file.")
-    return
+if finenv.IsRGPLua then -- if new lua
+    require('mobdebug').start()
 end
-
 
 -- Load the toolkit  functions needed for the tests:
 require("tools/jwluatesttools")
+
+-- Validate the current file prior to the test:
+if not CheckForOfficialTestTemplate() then return end
 
 -- Load and execute the tests for the classes:
 require("objecttests/jwluatest_obj_fcaccidentalmod")
@@ -47,6 +42,7 @@ require("objecttests/jwluatest_obj_fcnote")
 require("objecttests/jwluatest_obj_fcnoteentry")
 require("objecttests/jwluatest_obj_fcnoteheadmod")
 require("objecttests/jwluatest_obj_fcpagegraphic")
+require("objecttests/jwluatest_obj_fcpagetext")
 require("objecttests/jwluatest_obj_fcpartscopeprefs")
 require("objecttests/jwluatest_obj_fcpartstaffvoicing")
 require("objecttests/jwluatest_obj_fcpianobraceprefs")
