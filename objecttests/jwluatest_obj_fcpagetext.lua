@@ -1,6 +1,6 @@
 function FCPageText_ValueTests_ItemNo1_0(obj)
    NumberValuePropertyTest(obj, "FCPageText", "FirstPage", 1)
-   BoolValuePropertyTest(obj, "FCPageText", "FrameEdgeRef", true, true)
+   BoolValuePropertyTest(obj, "FCPageText", "FrameEdgeRef", true, finenv.RawFinaleVersion <= 0x1b200000) -- a bug in pre 27.2 makes this property read-only
    NumberValuePropertyTest(obj, "FCPageText", "HorizontalAlignment", 2)
    NumberValuePropertyTest(obj, "FCPageText", "HorizontalAlignmentRightPage", 2)
    NumberValuePropertyTest(obj, "FCPageText", "HorizontalPos", 0)

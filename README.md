@@ -1,32 +1,33 @@
 Regression Tests for Lua on Finale
 ==================================
 
-The files in this repository contain the script files required to run regression tests on RGP/JW Lua. The tests report issues found on the running RGP/JW Lua/Finale versions. Testing on this level is performed to make sure that RGP/JW Lua actually behaves the way it is meant to behave.
+The files in this repository contain the script files required to run regression tests on RGP/JW Lua. The tests report issues found on the running RGP/JW Lua and Finale versions. Testing on this level is performed to make sure that RGP/JW Lua actually behaves the way it is meant to behave.
 
 The following tests are performed.
 
-### Constant tests:
+### Constant Tests:
 
 - The existence of the constant.
 - The value of the constat.
 
-### Property tests:
+### Property Tests:
 
 - The property exists in Lua.
 - The property also has a getter and setter method available in Lua.
 - The property returns the expected Lua type.
 - The property can be loaded, set and saved correctly in Finale.
 
-### File-Specific:
+### File-Specific Tests:
 
 - Properties are checked against actual values in the test template.
 
-### Unlinkable:
+### Unlinkable Tests:
 
-This is useful for testing if a new version of Finale has added unlinkable properties.
+This is useful for testing if a new version of Finale has added unlinkable data entities.
 
 - Properties are tested to see if editing them in the part unlinks them from the score.
 - If an older version of Finale does not support unlinking a particular property, that unlinkable test is skipped.
+- These tests also exercise the tested properties in a manner similar to the file-specific tests.
 
 ## Installation Instructions
 

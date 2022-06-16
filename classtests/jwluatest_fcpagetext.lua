@@ -1,6 +1,8 @@
 function FCPageText_PropertyTests(obj)
    NumberPropertyTest(obj, "FCPageText", "FirstPage", {1, 2})
-   BoolPropertyTest_RO(obj, "FCPageText", "FrameEdgeRef") -- FrameEdgeRef is effectively read-only, because the PDK disallows changing from true to false
+   -- due to a bug, FrameEdgeRef is effectively read-only in Finale 27.2 and lower. 
+   local frame_ref_tester = finenv.RawFinaleVersion <= 0x1b200000 and BoolPropertyTest_RO or BoolPropertyTest
+   frame_ref_tester(obj, "FCPageText", "FrameEdgeRef") 
    NumberPropertyTest(obj, "FCPageText", "HorizontalAlignment",
        {finale.TEXTHORIZALIGN_LEFT, finale.TEXTHORIZALIGN_RIGHT, finale.TEXTHORIZALIGN_CENTER})
    NumberPropertyTest(obj, "FCPageText", "HorizontalAlignmentRightPage",
