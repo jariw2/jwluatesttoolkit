@@ -5,6 +5,7 @@ function FCCellText_Test_Unlinkable(measure, staff, partnumber)
     for cell_text in each(cell_texts) do
         UnlinkableNumberPropertyTest(cell_text, "FCCellText", "MeasurePos", "Reload", nil, 256, partnumber, skip_finale_version)
         UnlinkableNumberPropertyTest(cell_text, "FCCellText", "VerticalPos", "Reload", nil, 12, partnumber, skip_finale_version)
+        UnlinkableNumberPropertyTest(cell_text, "FCCellText", "Visible", "Reload", nil, 12, partnumber, skip_finale_version)
     end
 end
 

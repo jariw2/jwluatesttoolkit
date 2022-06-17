@@ -432,7 +432,7 @@ function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loa
     
     local obj_updater = function(value)
         if updater_is_function then return updater(value) end
-        if value then
+        if value ~= nil then
             obj[updater] = value
         end
         return obj[updater]
@@ -441,10 +441,16 @@ function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loa
     local score_value = obj_updater()
     part:SwitchTo()
     local loaded_in_part = obj_load()
-    obj_updater(score_value + increment)
+    local new_value
+    if type(score_value) == "boolean" then
+        new_value = not score_value
+    else
+        new_value = score_value + increment
+    end
+    obj_updater(new_value)
     AssureTrue(loaded_in_part and obj:Save() or obj.SaveNew and obj:SaveNew(), "UnlinkableNumberPropertyTest Internal error: save in part. ("..classname..")")
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in part. ("..classname..")")
-    AssureTrue(obj_updater() == score_value + increment, "UnlinkableNumberPropertyTest Internal error: value for "..tostring(updater).." not retained in part after reload. ("..classname..")")
+    AssureTrue(obj_updater() == new_value, "UnlinkableNumberPropertyTest Internal error: value for "..tostring(updater).." not retained in part after reload. ("..classname..")")
     part:SwitchBack()
     AssureTrue(obj:Reload(), "UnlinkableNumberPropertyTest Internal error: reload in score. ("..classname..")")
     AssureTrue(obj_updater() == score_value, classname.."."..tostring(updater).." is unlinkable.")
