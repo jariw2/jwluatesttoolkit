@@ -27,6 +27,7 @@ function FCSmartShape_Test_Unlinkable(shapeid, staff)
         end
         check_terminator("GetTerminateSegmentLeft")
         check_terminator("GetTerminateSegmentRight")
+        UnlinkableNumberPropertyTest(smart_shape, "FCSmartShape", "Visible", "Reload", nil, 12, staff_to_part[staff])
     end
 end
 

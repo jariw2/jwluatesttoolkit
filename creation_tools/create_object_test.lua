@@ -147,7 +147,7 @@ end
 ]]
 
 
-local p = finale.FCPageText()
-p:Load(1, 0)
-ProcessObject(p, "obj")
+local p = finale.FCSmartShape()
+p:Load(2)
+ProcessObject(p, "smartshape")
 
