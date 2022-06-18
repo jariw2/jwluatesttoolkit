@@ -76,7 +76,7 @@ The following scripts in the `creation_tools` directory create “skeleton” co
 
 |Test Script|Description|
 | --- | --- |
-|`create_constants_test.lua`|Creates a test script for constants, filtering on an input string. (Only works with JW Lua.)|
+|`create_constants_test.lua`|Creates a test script for constants, filtering on an input string. Edit this script as needed for the desired constant prefix.|
 |`create_object_reflection.lua`|Creates C++ macros for every method and property of the input classname. These can be used with [`refl-cpp`](https://github.com/veselink1/refl-cpp) (a compile-time reflection library for C++17.)|
 |`create_object_test.lua`|Creates a test script for the class to be included in the file tests. Edit this script as needed to run for the desired classname.|
 |`create_property_test.lua`|Creates a test for the class to be included in the class tests. Edit this script as needed to run for the desired classname.|

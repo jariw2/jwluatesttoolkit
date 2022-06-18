@@ -147,7 +147,8 @@ end
 ]]
 
 
-local p = finale.FCPageText()
-p:Load(1, 0)
-ProcessObject(p, "obj")
+local obj = finale.FCCellText()
+obj:ConnectCell(finale.FCCell(12, 1))
+obj:LoadFirst()
+ProcessObject(obj, "cell_text")
 
