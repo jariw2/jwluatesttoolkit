@@ -147,8 +147,7 @@ end
 ]]
 
 
-local obj = finale.FCCellText()
-obj:ConnectCell(finale.FCCell(12, 1))
-obj:LoadFirst()
-ProcessObject(obj, "cell_text")
+local obj = finale.FCSmartShape()
+if not obj:Load(2) then print("load2 failed") end
+ProcessObject(obj:GetTerminateSegmentLeft(), "left_seg")
 
