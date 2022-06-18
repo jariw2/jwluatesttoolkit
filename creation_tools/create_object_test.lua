@@ -147,7 +147,8 @@ end
 ]]
 
 
-local p = finale.FCSmartShape()
-p:Load(2)
-ProcessObject(p, "smartshape")
+local obj = finale.FCCellText()
+obj:ConnectCell(finale.FCCell(12, 1))
+obj:LoadFirst()
+ProcessObject(obj, "cell_text")
 
