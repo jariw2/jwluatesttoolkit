@@ -132,7 +132,7 @@ end
 -- The actual code to process an object (modify as needed):
 
 if finenv.IsRGPLua then
-    require('mobdebug').start()
+    --require('mobdebug').start()
 end
 
 --[[
@@ -147,7 +147,13 @@ end
 ]]
 
 
-local obj = finale.FCSmartShape()
-if not obj:Load(2) then print("load2 failed") end
-ProcessObject(obj:GetTerminateSegmentLeft(), "left_seg")
+local staff = finale.FCStaff()
+
+-- The first staff in the test document must have Full and Abbreviated name positions overridden
+-- Otherwise these tests generate spurious errors
+staff:Load(1)
+
+local namepos_full = staff:GetAbbreviatedNamePosition()
+--AssureTrue(namepos_full ~= nil, "FCStaffNamePosition - LoadFull")
+ProcessObject(namepos_full, "namepos_abrv")
 

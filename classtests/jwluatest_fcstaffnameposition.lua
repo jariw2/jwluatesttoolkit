@@ -9,19 +9,16 @@ function FCStaffNamePosition_PropertyTests(classname, prefs)
 end
 
 -- Call:
-local staves = finale.FCStaves()
-staves:LoadAll()
-for staff in each(staves) do
-   -- The first staff in the test document must have Full and Abbreviated name positions overridden
-   -- Otherwise these tests generate spurious errors
+local staff = finale.FCStaff()
 
-   local namepos_full = staff:GetFullNamePosition()
-   AssureTrue(namepos_full ~= nil, "FCStaffNamePosition - LoadFull")
-   FCStaffNamePosition_PropertyTests("FCStaffNamePosition", namepos_full)
+-- The first staff in the test document must have Full and Abbreviated name positions overridden
+-- Otherwise these tests generate spurious errors
+staff:Load(1)
 
-   local namepos_abrv = staff:GetAbbreviatedNamePosition()
-   AssureTrue(namepos_abrv ~= nil, "FCStaffNamePosition - Abbreviated")
-   FCStaffNamePosition_PropertyTests("FCStaffNamePosition", namepos_abrv)
+local namepos_full = staff:GetFullNamePosition()
+AssureTrue(namepos_full ~= nil, "FCStaffNamePosition - LoadFull")
+FCStaffNamePosition_PropertyTests("FCStaffNamePosition", namepos_full)
 
-   break -- only need to test one staff
-end
+local namepos_abrv = staff:GetAbbreviatedNamePosition()
+AssureTrue(namepos_abrv ~= nil, "FCStaffNamePosition - Abbreviated")
+FCStaffNamePosition_PropertyTests("FCStaffNamePosition", namepos_abrv)
