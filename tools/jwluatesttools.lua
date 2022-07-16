@@ -404,7 +404,7 @@ function UnlinkableNumberPropertyTest(obj, classname, updater, loadfunction, loa
     if not updater_is_function then
         if not AssureTrue(type(updater) == "string", "UnlinkableNumberPropertyTest updater is string. ("..classname..")") then return end
         PropertyTest(obj, classname, updater)
-        if obj[updater] == nil then return end
+        if not AssureNonNil(obj[updater], "UnlinkableNumberPropertyTest "..classname.."."..updater..".") then return end
     end
     if not AssureTrue(increment ~= 0, "UnlinkableNumberPropertyTest Internal error: zero passed for increment. ("..classname..")") then return end
     if not AssureTrue(partnumber ~= finale.PARTID_SCORE, "UnlinkableNumberPropertyTest Internal error: score passed instead of part. ("..classname..")") then return end
