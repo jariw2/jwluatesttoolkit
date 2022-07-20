@@ -1,8 +1,9 @@
 function FCStaffNamePosition_Test_Unlinkable(classname, obj, staff)
-   UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "Alignment", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
-   UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "ExpandSingleWord", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
+   -- the commented properties are currently not unlinkable, even in the U.I.
+   --UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "Alignment", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
+   --UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "ExpandSingleWord", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
    UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "HorizontalOffset", "Reload", nil, 24, staff_to_part[staff], skip_finale_version)
-   UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "Justification", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
+   --UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "Justification", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
    UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "UsePositioning", "Reload", nil, 1, staff_to_part[staff], skip_finale_version)
    UnlinkableNumberPropertyTest(obj, "FCStaffNamePosition", "VerticalOffset", "Reload", nil, -24, staff_to_part[staff], skip_finale_version)
 end

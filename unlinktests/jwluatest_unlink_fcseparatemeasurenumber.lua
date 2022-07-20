@@ -12,7 +12,11 @@ function FCSeparateMeasureNumber_Test_Unlinkable(measure, staff)
         sep_num:AssignMeasureNumberRegion(measnum_region)
         AssureTrue(sep_num:SaveNew(), "FCSeparateMeasureNumber_Test_Unlinkable SaveNew()")
     end
+    UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "HideOverride", "LoadFirst", nil, 1, staff_to_part[staff], skip_finale_version)
     UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "HorizontalPosition", "LoadFirst", nil, 256, staff_to_part[staff], skip_finale_version)
+    UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "IsAlternateNumber", "LoadFirst", nil, 1, staff_to_part[staff], skip_finale_version)
+    UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "ShowOverride", "LoadFirst", nil, 1, staff_to_part[staff], skip_finale_version)
+    UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "UseEnclosure", "LoadFirst", nil, 1, staff_to_part[staff], skip_finale_version)
     UnlinkableNumberPropertyTest(sep_num, "FCSeparateMeasureNumber", "VerticalPosition", "LoadFirst", nil, 12, staff_to_part[staff], skip_finale_version)
     if not loaded_here then
         sep_num:DeleteData()
