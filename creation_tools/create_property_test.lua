@@ -9,9 +9,9 @@ if not finenv.IsRGPLua then
     ClassNameToFind = returnvalues[1]
     PassedArgument = returnvalues[2]
 else
-    ClassNameToFind = "FCCellText"
+    ClassNameToFind = "FCSeparateMeasureNumber"
     PassedArgument = "obj"
-    require("mobdebug").start()
+    --require("mobdebug").start()
 end
 
 local TestOutput = ""
