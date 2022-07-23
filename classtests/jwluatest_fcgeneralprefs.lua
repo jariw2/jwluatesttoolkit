@@ -1,5 +1,7 @@
 function FCGeneralPrefs_PropertyTests(obj)
    BoolPropertyTest(obj, "FCGeneralPrefs", "AutomaticUpdateLayout")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "DottedRestsAreLegalInCompoundMeter")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "DottedRestsAreLegalInSimpleMeter")
    NumberPropertyTest(obj, "FCGeneralPrefs", "MeasurementUnit", {finale.MEASUREMENTUNIT_EVPUS,
         finale.MEASUREMENTUNIT_INCHES, finale.MEASUREMENTUNIT_CENTIMETERS, finale.MEASUREMENTUNIT_PICAS, finale.MEASUREMENTUNIT_POINTS,
         finale.MEASUREMENTUNIT_SPACES, finale.MEASUREMENTUNIT_MILLIMETERS})
