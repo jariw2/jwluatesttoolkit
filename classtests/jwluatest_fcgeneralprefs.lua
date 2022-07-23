@@ -1,6 +1,6 @@
 function FCGeneralPrefs_PropertyTests(obj)
    BoolPropertyTest(obj, "FCGeneralPrefs", "AutomaticUpdateLayout")
-   NumberPropertyTest(obj, "FCGeneralPrefs", "MeasurementUnit", {finale.MEASUREMENTUNIT_DEFAULT, finale.MEASUREMENTUNIT_EVPUS,
+   NumberPropertyTest(obj, "FCGeneralPrefs", "MeasurementUnit", {finale.MEASUREMENTUNIT_EVPUS,
         finale.MEASUREMENTUNIT_INCHES, finale.MEASUREMENTUNIT_CENTIMETERS, finale.MEASUREMENTUNIT_PICAS, finale.MEASUREMENTUNIT_POINTS,
         finale.MEASUREMENTUNIT_SPACES, finale.MEASUREMENTUNIT_MILLIMETERS})
    NumberPropertyTest(obj, "FCGeneralPrefs", "PitchRepresentationType", {0, 1})
