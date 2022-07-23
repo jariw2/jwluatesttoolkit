@@ -1,6 +1,6 @@
 function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   finaleplugin.Author = "Jari Williamsson"   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"   return "Create Finale Lua Constants Test", "Create constants test", "Creates a test for the constants available to Finale Lua."end
 
-local pattern = "SS_" -- edit as needed in RGP Lua
+local pattern = "MEASUREMENTUNIT_" -- edit as needed in RGP Lua
 
 local get_finale_propget = function()
     if finenv.IsRGPLua then

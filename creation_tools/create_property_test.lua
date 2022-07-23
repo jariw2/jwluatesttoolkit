@@ -9,7 +9,7 @@ if not finenv.IsRGPLua then
     ClassNameToFind = returnvalues[1]
     PassedArgument = returnvalues[2]
 else
-    ClassNameToFind = "FCSeparateMeasureNumber"
+    ClassNameToFind = "FCGeneralPrefs"
     PassedArgument = "obj"
     --require("mobdebug").start()
 end
