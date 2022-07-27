@@ -2,11 +2,21 @@ function FCGeneralPrefs_PropertyTests(obj)
    BoolPropertyTest(obj, "FCGeneralPrefs", "AutomaticUpdateLayout")
    BoolPropertyTest(obj, "FCGeneralPrefs", "DottedRestsAreLegalInCompoundMeter")
    BoolPropertyTest(obj, "FCGeneralPrefs", "DottedRestsAreLegalInSimpleMeter")
+   NumberPropertyTest(obj, "FCGeneralPrefs", "GraceNoteQuantizationMode", {finale.GRACEQUANTMODE_ALLOW,
+        finale.GRACEQUANTMODE_REMOVE, finale.GRACEQUANTMODE_CONVERT})
+   BoolPropertyTest(obj, "FCGeneralPrefs", "IncludeMIDITempoChanges")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "IncludeMIDIContinuousData")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "IncludeVoiceTwo")
+   NumberPropertyTest(obj, "FCGeneralPrefs", "KeyboardSplitPoint", {0, 62, 127})
    NumberPropertyTest(obj, "FCGeneralPrefs", "MeasurementUnit", {finale.MEASUREMENTUNIT_EVPUS,
         finale.MEASUREMENTUNIT_INCHES, finale.MEASUREMENTUNIT_CENTIMETERS, finale.MEASUREMENTUNIT_PICAS, finale.MEASUREMENTUNIT_POINTS,
         finale.MEASUREMENTUNIT_SPACES, finale.MEASUREMENTUNIT_MILLIMETERS})
    NumberPropertyTest(obj, "FCGeneralPrefs", "PitchRepresentationType", {0, 1})
    NumberPropertyTest(obj, "FCGeneralPrefs", "PitchRepresentationValue", {0, -12, 12})
+   NumberPropertyTest(obj, "FCGeneralPrefs", "QuantizationMode", {finale.QUANTIZATIONMODE_NOTUPLETS,
+        finale.QUANTIZATIONMODE_MIXRHYTHMS, finale.QUANTIZATIONMODE_SPACEEVENLY})
+   NumberPropertyTest(obj, "FCGeneralPrefs", "QuantizationSensitivityLevel", {0, 128, 217})
+   NumberPropertyTest(obj, "FCGeneralPrefs", "QuantizationSmallestNoteValue", {0, 128, 217})
    BoolPropertyTest(obj, "FCGeneralPrefs", "RebarStopAtEndOfRegion")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RebarStopAtEmptyFrame")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RebarStopAtKeyChange")
@@ -15,14 +25,17 @@ function FCGeneralPrefs_PropertyTests(obj)
    BoolPropertyTest_RO(obj, "FCGeneralPrefs", "RebarStopOnlyAtEndOfPiece")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RebarWhenTimeSigChanged")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RebeamOnRebar")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "RetainKeyVelocities")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "RetainNoteDurations")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RecalcMeasures")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RecalcSystems")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RespaceMeasureLayout")
    BoolPropertyTest(obj, "FCGeneralPrefs", "RetainFrozenMeasures")
    BoolPropertyTest(obj, "FCGeneralPrefs", "ShowDefaultGroupNames")
    BoolPropertyTest(obj, "FCGeneralPrefs", "ShowDefaultStaffNames")
+   BoolPropertyTest(obj, "FCGeneralPrefs", "SoftenSyncopations")
+   NumberPropertyTest_RO(obj, "FCGeneralPrefs", "UndoState")
 end
-
 
 -- Call:
 local obj = finale.FCGeneralPrefs()

@@ -11,3 +11,35 @@ end
 
 -- Test the constants:
 TestConstants_MEASUREMENTUNIT_()
+
+
+function TestConstants_GRACEQUANTMODE_()
+   NumberConstantTest(finale.GRACEQUANTMODE_ALLOW, "GRACEQUANTMODE_ALLOW", 0)
+   NumberConstantTest(finale.GRACEQUANTMODE_REMOVE, "GRACEQUANTMODE_REMOVE", 1)
+   NumberConstantTest(finale.GRACEQUANTMODE_CONVERT, "GRACEQUANTMODE_CONVERT", 2)
+end
+
+-- Test the constants:
+TestConstants_GRACEQUANTMODE_()
+
+
+function TestConstants_QUANTIZATIONMODE_()
+   NumberConstantTest(finale.QUANTIZATIONMODE_NOTUPLETS, "QUANTIZATIONMODE_NOTUPLETS", 1)
+   NumberConstantTest(finale.QUANTIZATIONMODE_MIXRHYTHMS, "QUANTIZATIONMODE_MIXRHYTHMS", 2)
+   NumberConstantTest(finale.QUANTIZATIONMODE_SPACEEVENLY, "QUANTIZATIONMODE_SPACEEVENLY", 3)
+end
+
+-- Test the constants:
+TestConstants_QUANTIZATIONMODE_()
+
+
+function TestConstants_UNDOSTATE_()
+   NumberConstantTest(finale.UNDOSTATE_OFF, "UNDOSTATE_OFF", -2)
+   NumberConstantTest(finale.UNDOSTATE_SUSPENDED, "UNDOSTATE_SUSPENDED", -1)
+   NumberConstantTest(finale.UNDOSTATE_DISABLED, "UNDOSTATE_DISABLED", 0)
+   NumberConstantTest(finale.UNDOSTATE_ENABLED, "UNDOSTATE_ENABLED", 1)
+end
+
+-- Test the constants:
+TestConstants_UNDOSTATE_()
+
