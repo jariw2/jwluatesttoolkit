@@ -1,6 +1,14 @@
-function plugindef()   -- This function and the 'finaleplugin' namespace   -- are both reserved for the plug-in definition.   finaleplugin.NoStore = true   finaleplugin.Author = "Jari Williamsson"   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"   return "Create Finale Lua Constants Test", "Create constants test", "Creates a test for the constants available to Finale Lua."end
+function plugindef()
+   -- This function and the 'finaleplugin' namespace
+   -- are both reserved for the plug-in definition.
+   finaleplugin.RequireDocument = false
+   finaleplugin.NoStore = true
+   finaleplugin.Author = "Jari Williamsson"
+   finaleplugin.CategoryTags = "Debug, Development, Diagnose, UI"
+   return "Create Finale Lua Constants Test", "Create constants test", "Creates a test for the constants available to Finale Lua."
+end
 
-local pattern = "MEASUREMENTUNIT_" -- edit as needed in RGP Lua
+local pattern = "UNDOSTATE_" -- edit as needed in RGP Lua
 
 local get_finale_propget = function()
     if finenv.IsRGPLua then
@@ -19,12 +27,17 @@ if finenv.IsRGPLua then
 end
 if not finenv.IsRGPLua then
     -- Show dialog
-    local dialog = finenv.UserValueInput()    dialog.Title = "Test JW Lua Constants"    dialog:SetTypes("String")    dialog:SetDescriptions("Search string (empty to list all):")
+    local dialog = finenv.UserValueInput()
+    dialog.Title = "Test JW Lua Constants"
+    dialog:SetTypes("String")
+    dialog:SetDescriptions("Search string (empty to list all):")
 
-    local returnvalues = dialog:Execute()    if returnvalues == nil then return end
+    local returnvalues = dialog:Execute()
+    if returnvalues == nil then return end
     if returnvalues == "" then
         pattern = ""
-    else        pattern = returnvalues[1]
+    else
+        pattern = returnvalues[1]
     end
 end
 local result = {}
@@ -64,7 +77,8 @@ for k, v in pairs(result) do
         value = '"' .. value .. '"'
     end
     ResultString = ResultString .. "   " .. prefix .. "ConstantTest(finale." .. v .. ", " .. '"' .. v .. '", ' .. value .. ")\n"
-endResultString = ResultString .. "end\n\n"
+end
+ResultString = ResultString .. "end\n\n"
 
 
 ResultString = ResultString .. "-- Test the constants:\nTestConstants_" .. pattern .. "()\n"
@@ -72,6 +86,7 @@ ResultString = ResultString .. "-- Test the constants:\nTestConstants_" .. patte
 if finenv.UI():TextToClipboard(ResultString) then
     finenv.UI():AlertInfo("Code has been copied to the clipboard.", "Test Created")
 end
+
 
 
 
